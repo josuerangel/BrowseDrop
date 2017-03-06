@@ -1,0 +1,14 @@
+.boxList__item--display{
+  margin: 10px 2px 2px 2px;
+  border-bottom: solid 1px gray;
+}
+
+.listInfoFile--display {
+  list-style: none;
+}
+.listInfoFileItem--display {
+  display: inline-block;
+}
+.listInfoFileItem--display:first-child {
+  width: 70%;
+}
