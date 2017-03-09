@@ -31,6 +31,7 @@ var FileDragAndDrop = React.createClass({
   },
 
   handleDragEnter: function (event) {
+    console.log('drag enter');
     if (typeof this.props.onDragEnter === 'function') {
       this.props.onDragEnter(event);
     }

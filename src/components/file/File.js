@@ -1,15 +1,32 @@
-import React from 'react';
-//import css from '../components/file/file.css';
-//import './File.css';
-import './File.styl'
+import React from 'react'
+import classNames from 'classnames'
+import './file.styl'
 
 class File extends React.Component {
+  setUrlIcon(item){
+    if (item.url !== undefined)
+      return './bundles/assets/images/file-empty.svg'
+    else
+      return './bundles/assets/images/folder.svg'
+  }
+  onClick(event){
+    this.props.onClick(this.props.data);
+  }
   render () {
-    return <div className="boxList__item--display">
-      <ul className="listInfoFile--display">
-        <li className="listInfoFileItem--display"><a href={this.props.data.urlDownload}>{this.props.data.name}</a></li>
-        <li className="listInfoFileItem--display">{this.props.data.date}</li>
-      </ul>
+    let classLink = classNames({
+
+    });
+    return <div className="upb__itembox">
+      <div className="upb__itembox__iconName">
+
+        <img src={this.setUrlIcon(this.props.data)}
+          className='upb__itemList-verticalAlign upb__itembox__icon upb__file-margin' />
+        <a className="upb__itembox__name" href={this.props.data.urlDownload}
+          onClick={this.onClick.bind(this)}>{this.props.data.name}</a>
+      </div>
+      <div className="">
+        {this.props.data.date}
+      </div>
     </div>
   }
 };

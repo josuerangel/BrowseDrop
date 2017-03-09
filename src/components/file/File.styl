@@ -1,8 +1,7 @@
-@import 'yeticss'
 
 .boxList__item--display
-  margin: 10px 2px 2px 2px
-  border-bottom: solid 1px gray
+  // margin: 10px 2px 2px 2px
+  border-bottom: 2px solid #ebedef
 
 
 .listInfoFile--display
@@ -13,3 +12,45 @@
 
 .listInfoFileItem--display:first-child
   width: 70%
+
+color-text = #3d464d
+//color-border = #cce6fa
+//color-border = #69D2E7
+color-border = rgba(158,203,225,0.4);
+color-background-select = rgba(204,230,250,0.5)
+color-background-directory = rgba(158,203,225,0.1);
+
+.upb__itembox
+  font-family: sans-serif,"Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma
+  font-size: 13px
+  padding: 10px 5px 5px 5px
+  border-top: 1px solid white
+  border-bottom: 1px solid #ebedef
+  &:hover
+    background-color: color-background-select
+    border-top: 1px solid color-border
+    border-bottom: 1px solid color-border
+
+.upb__itembox > *
+  display: inline-block
+
+.upb__itembox__iconName
+  width: 70%
+
+.upb__itemList-verticalAlign
+  vertical-align: middle
+
+.upb__itembox__icon
+  width: 20px
+  height: auto
+
+.upb__file-margin
+  margin 0px 10px 8px 0px
+
+.upb__itembox__name
+  color: color-text
+  text-decoration: none
+  &:hover
+    color: color-text
+    text-decoration: underline
+    cursor: pointer
