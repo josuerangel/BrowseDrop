@@ -20,6 +20,16 @@ MenuItem.defaultProps = {
 }
 
 class Menu extends React.Component {
+  constructor(props){
+    super(props);
+    console.log('constructor: ', this.props);
+  }
+  componentDidMount(){
+    console.log(this.props);
+    if(this.props.directorys !== undefined)
+      this.directoryHome = this.props.directorys.find((directory) => directory.id === 0)
+    console.log('directoryHome', this.directoryHome);
+  }
   handleClick(event){
     console.log(this);
     let home = {

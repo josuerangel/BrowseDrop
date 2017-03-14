@@ -26,8 +26,22 @@ function extensionsBlock(file, extensionsBlock){
   if(extensionsBlock === undefined) return false;
   return extensionsBlock.includes(getExtension(file.name));
 }
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  } else {
+    var error = new Error(response.statusText);
+    error.response = response;
+    throw error;
+  }
+}
+function parseJSON(response) {
+  return response.json();
+}
 
-function Core(fileList, options, items){
+function Core(fileList, options, items, callback){
+  let sendFiles = false;
+  callback('holitas mundo callback');
   /**
    * Set default settings and merge with user settings
    */
@@ -50,6 +64,22 @@ function Core(fileList, options, items){
     if (extensionsBlock(fileList[i], settings.extensionsBlock)) return settings.caption.extensionsBlock;
   }
   if (allowDuplicates(items, fileList, settings.allowDuplicates)) return settings.caption.allowDuplicates;
+
+  if(sendFiles){
+    let formData = new FormData();
+    for (let x = 0, len = fileList.length; x < len; x++)
+      formData.append('file' + x, fileList[x]);
+    let self = this;
+    fetch('/avatars', {
+      method: 'POST',
+      body: formData
+    }).then(this.checkStatus).then(this.parseJSON).then(function(data) {
+      console.log('success', data);
+    }).catch(function(error) {
+      console.log('error', error);
+      self._addNotification(error.message, 'error');
+    });
+  }
 }
 
 module.exports = {
