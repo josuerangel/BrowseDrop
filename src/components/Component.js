@@ -6,7 +6,23 @@ import UploadBox from './UploadBox'
 class Component extends React.Component {
   render () {
     let options = {
+      config: {
+        caption: {
+          maxSize: "archivo grande"
+        },
+        maxSize: 40,
+        //extensionsBlock: ["exe", "xml", "flv", "mp3", "mp4", "avi", "wma"],
+        allowDuplicates: false,
+        extensions:["png", "jpeg", "gif", "pdf", "docx", "doc"],
+        iconHome: false
+      }
+      ,
    "Data":[
+     {
+       "id": 0,
+       "name": "home",
+       "drag": true
+     },
       {
          "id":82,
          "parentId":2,

@@ -14,8 +14,7 @@ var FileDragAndDrop = React.createClass({
     onDragLeave: React.PropTypes.func,
     onDragOver: React.PropTypes.func,
     onDragEnd: React.PropTypes.func,
-    dataDrop: React.PropTypes.string,
-    dataFile: React.PropTypes.string
+    dataDrop: React.PropTypes.string
   },
 
   handleDragStart: function (event) {
@@ -31,11 +30,9 @@ var FileDragAndDrop = React.createClass({
   },
 
   handleDragEnter: function (event) {
-    console.log('drag enter');
     if (typeof this.props.onDragEnter === 'function') {
       this.props.onDragEnter(event);
     }
-    //this.handleTime();
   },
 
   handleDragLeave: function (event) {

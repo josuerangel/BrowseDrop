@@ -1,13 +1,14 @@
 import React from 'react'
 import classNames from 'classnames'
 import './file.styl'
+import { FaFolderOpen, FaFileO } from 'react-icons/lib/fa'
+//import FaFileO from 'react-icons/lib/fa/file-o'
 
 class File extends React.Component {
-  setUrlIcon(item){
-    if (item.url !== undefined)
-      return './bundles/assets/images/file-empty.svg'
-    else
-      return './bundles/assets/images/folder.svg'
+  setIcon(item){
+    return (item.url === undefined)
+      ? <FaFolderOpen className="upb__itembox__icon" />
+      : <FaFileO className="upb__itembox__icon"/>;
   }
   onClick(event){
     this.props.onClick(this.props.data);
@@ -18,9 +19,7 @@ class File extends React.Component {
     });
     return <div className="upb__itembox">
       <div className="upb__itembox__iconName">
-
-        <img src={this.setUrlIcon(this.props.data)}
-          className='upb__itemList-verticalAlign upb__itembox__icon upb__file-margin' />
+        {this.setIcon(this.props.data)}
         <a className="upb__itembox__name" href={this.props.data.urlDownload}
           onClick={this.onClick.bind(this)}>{this.props.data.name}</a>
       </div>
