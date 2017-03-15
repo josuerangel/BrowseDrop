@@ -1,15 +1,13 @@
 import React from 'react'
 import Menu from '../menu/menu'
 import Box from '../box/box'
-import File from '../file/File'
-import Directory from '../Directory'
-import 'whatwg-fetch'
 import './uploadbox.styl'
-import {Core} from '../../logic/validations.js'
+import {Core, CoreSingleFile} from '../../logic/core.js'
 import NotificationSystem from 'react-notification-system'
+import Notifications from '../notifications/notifications.js'
 
 class UploadBox extends React.Component {
-  _notificationSystem : null
+  notificationSystem : null
   arrDirectorys : []
   constructor(props) {
     super(props);
@@ -19,36 +17,49 @@ class UploadBox extends React.Component {
     this.state = {
       directory: directory,
       id: 0,
-      items: arrBox
+      items: arrBox,
+      notifications: [
+        {type:"error", message:"errorsin"}
+      ]
     };
   }
-  _addNotification(message, level = 'success') {
-    this._notificationSystem.addNotification({message: message, level: level});
+  addNotification(options) {
+    let defaultOptions = {
+      level: 'success',
+      autoDismiss: 10
+    }
+    let setup = Object.assign(defaultOptions, options)
+    this.notificationSystem.addNotification(setup);
   }
   componentDidMount() {
-    this._notificationSystem = this.refs.notificationSystem;
+    this.notificationSystem = this.refs.notificationSystem;
   }
-  callbackCore(data){
-    console.log('callbackCore: ', data);
+  callbackCore(data) {
+    this.addNotification(data);
+    let temp = this.state.notifications;
+    temp.push({ type: "success", message: "desde aca"});
+    this.setState({ notifications: temp });
+
+    let temp2 = this.state.notifications.map(function(noti) {
+      console.log('iteracion', noti, data);
+      if(noti.id === data.notificationId)
+        console.log('find', noti);
+    });
+    this.setState({ notifications: temp2 });
   }
   handleDrop(fileList, directory) {
-    console.log('handleDrop:', fileList, directory);
-    Core(fileList, this.props.options.config, this.state.items, this.callbackCore);
-    // if (message !== undefined)
-    //   this._addNotification(message);
-    // let formData = new FormData();
-    // for (let x = 0, len = fileList.length; x < len; x++)
-    //   formData.append('file' + x, fileList[x]);
-    // let self = this;
-    // fetch('/avatars', {
-    //   method: 'POST',
-    //   body: formData
-    // }).then(this.checkStatus).then(this.parseJSON).then(function(data) {
-    //   console.log('success', data);
-    // }).catch(function(error) {
-    //   console.log('error', error);
-    //   self._addNotification(error.message, 'error');
-    // });
+    let notification = {
+      title: 'Send',
+      message: 'sending file ' + fileList[0].name + 'in directory ' + directory.name,
+      level: 'info'
+    }
+    //this.addNotification(notification);
+    //Core(fileList, this.props.options.config, this.state.items, this.callbackCore.bind(this));
+
+    let temp = this.state.notifications;
+    temp.push({ id: 0, type: "success", message: "enviando archivin"});
+    this.setState({ notifications: temp });
+    CoreSingleFile(fileList[0], this.props.options.config, this.state.items, 0, this.callbackCore.bind(this));
   }
   handleClickDirectory(directory) {
     this.setState({
@@ -67,6 +78,7 @@ class UploadBox extends React.Component {
     return (
       <div className="upb_container">
         <h1>UploadBox</h1>
+        <Notifications notifications={this.state.notifications}></Notifications>
         <Menu id={this.state.id} directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} onClickDirectory={this.handleClickDirectory.bind(this)} onDrop={this.handleDrop.bind(this)}></Box>
         <NotificationSystem ref="notificationSystem"/>

@@ -22,7 +22,7 @@ const ReactContentRenderer = {
 };
 
 function renderUploadBox(files){
-  ReactContentRenderer.render(<UploadBox dataFilesAndDirs={files} />, document.getElementById("UploadBox"));
+  ReactContentRenderer.render(<UploadBox options={files} />, document.getElementById("UploadBox"));
 }
 
 module.exports = renderUploadBox;

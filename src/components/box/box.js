@@ -1,5 +1,5 @@
 import React from 'react'
-import BoxHeader from '../boxheader/boxheader.js'
+import BoxHeader from './boxheader/boxheader.js'
 import File from '../file/File.js'
 import Directory from '../Directory/'
 import FileDragAndDrop from '../FileDragAndDrop'
@@ -9,7 +9,7 @@ import ZoneDrop from '../zonedrop/zonedrop.js'
 
 class BoxList extends ZoneDrop {
   render() {
-    let directoryClass = classNames({'box__dragOver': this.state.isDragOver});
+    let directoryClass = classNames({'upb__BoxList': true, 'box__dragOver': this.state.isDragOver});
     return <div className={directoryClass}>
       <FileDragAndDrop onDrop={this.handleDrop.bind(this)} onDragEnter={this.handleDragEnter.bind(this)} onDragLeave={this.handleDragLeave.bind(this)} onDragOver={this.handleDragOver.bind(this)}>
         {this.props.items}
