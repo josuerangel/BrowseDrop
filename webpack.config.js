@@ -1,3 +1,4 @@
+const path = require('path');
 var webpack = require('webpack');
 var CompressionPlugin = require('compression-webpack-plugin');
 var yeticss = require('yeticss');
@@ -6,7 +7,9 @@ module.exports = {
   entry: {
     app: __dirname + '/src',
     components: [__dirname + '/src/components/Component.js'],
-    uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js']
+    uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js'],
+    uploadBoxStandAlone : [__dirname + '/src/components/UploadBox/index.js'],
+    uploadBox2: [__dirname + '/src/components/wrapper/wrapper3.js']
   },
   output: {
     //path: './bin',
@@ -60,7 +63,17 @@ module.exports = {
       new webpack.ProvidePlugin({
               Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
               fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-         })
+         }),
+        //  new webpack.DefinePlugin({
+        //        'process.env':{
+        //          'NODE_ENV': JSON.stringify('production')
+        //        }
+        //      }),
+        //      new webpack.optimize.UglifyJsPlugin({
+        //        compress:{
+        //          warnings: true
+        //        }
+        //      })
   //     new webpack.DefinePlugin({ //<--key to reduce React's size
   //       'process.env': {
   //         'NODE_ENV': JSON.stringify('production')
@@ -70,6 +83,9 @@ module.exports = {
   //     new webpack.optimize.UglifyJsPlugin(),
   ],
   resolve: {
+    alias: {
+      'react': path.join(__dirname, 'node_modules', 'react')
+    },
     extensions: ['', '.js', '.jsx', '.styl']
   },
   stylus: {

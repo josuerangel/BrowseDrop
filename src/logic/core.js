@@ -53,7 +53,7 @@ function parseJSON(response) {
   return response.json();
 }
 
-function sendFile(file, callback) {
+function sendFile(file, notificationId, callback) {
   let formData = new FormData();
   formData.append(file.name, file);
   fetch('/avatars', {
@@ -64,9 +64,9 @@ function sendFile(file, callback) {
     callback(data);
   }).catch(function(error) {
     let errorMessage = {
-      title: error.message,
+      type: 'error',
       message: error.message + ' -- ' + error.response.url,
-      level: 'error'
+      id: notificationId
     };
     callback(errorMessage);
   });
@@ -95,7 +95,7 @@ function CoreSingleFile(file, settings, itemsBox, notificationId, callback){
   let settingsSingle = deepmerge.all([defaultSettings, settings]);
   let message = applyValidation(file, settingsSingle, itemsBox);
   if (message === undefined)
-    sendFile(file, callback);
+    sendFile(file, notificationId, callback);
   else {
     let dataResponse = {
       type: 'error',

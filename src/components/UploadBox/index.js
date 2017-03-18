@@ -3,14 +3,14 @@ import Menu from '../menu/menu'
 import Box from '../box/box'
 import './uploadbox.styl'
 import {Core, CoreSingleFile} from '../../logic/core.js'
-import NotificationSystem from 'react-notification-system'
 import Notifications from '../notifications/notifications.js'
 
 class UploadBox extends React.Component {
-  notificationSystem : null
   arrDirectorys : []
+  notificationCounter : null
   constructor(props) {
     super(props);
+    this.notificationCounter = 0;
     this.arrDirectorys = this.props.options.Data.filter((item) => (item.url === undefined));
     let directory = this.arrDirectorys.filter((item) => (item.id === 0));
     let arrBox = this.props.options.Data.filter((item) => (item.parentId === 0));
@@ -18,48 +18,44 @@ class UploadBox extends React.Component {
       directory: directory,
       id: 0,
       items: arrBox,
-      notifications: [
-        {type:"error", message:"errorsin"}
-      ]
+      notifications: []
     };
   }
   addNotification(options) {
-    let defaultOptions = {
-      level: 'success',
-      autoDismiss: 10
-    }
-    let setup = Object.assign(defaultOptions, options)
-    this.notificationSystem.addNotification(setup);
+    this.notificationCounter++;
+    let _notification = {
+      id: this.notificationCounter,
+      type: options.type,
+      message: options.message
+    };
+    let arrNotifications = this.state.notifications;
+    arrNotifications.push(_notification);
+    this.setState({ notifications: arrNotifications });
   }
-  componentDidMount() {
-    this.notificationSystem = this.refs.notificationSystem;
+  deleteNotification(notification){
+    console.log('deleteNotification: ', notification);
+    let arrNotifications = this.state.notifications.filter((n) => (n.id !== notification.id));
+    console.log('deleteNotification new state: ', arrNotifications);
+    this.setState({ notifications: arrNotifications });
   }
   callbackCore(data) {
-    this.addNotification(data);
-    let temp = this.state.notifications;
-    temp.push({ type: "success", message: "desde aca"});
-    this.setState({ notifications: temp });
-
-    let temp2 = this.state.notifications.map(function(noti) {
-      console.log('iteracion', noti, data);
-      if(noti.id === data.notificationId)
-        console.log('find', noti);
+    let arrNotifications = this.state.notifications.map((notification) => {
+      console.log('callbackCore compare: ', notification, data);
+      if(notification.id === data.id){
+        console.log('callbackCore modify: ', data);
+        notification.type = data.type;
+        notification.message = data.message;
+        notification.dissmiss = 10;
+      }
+      return notification;
     });
-    this.setState({ notifications: temp2 });
+    console.log('callbackCore: ', arrNotifications);
+    this.setState({ notifications: arrNotifications });
   }
   handleDrop(fileList, directory) {
-    let notification = {
-      title: 'Send',
-      message: 'sending file ' + fileList[0].name + 'in directory ' + directory.name,
-      level: 'info'
-    }
-    //this.addNotification(notification);
-    //Core(fileList, this.props.options.config, this.state.items, this.callbackCore.bind(this));
-
-    let temp = this.state.notifications;
-    temp.push({ id: 0, type: "success", message: "enviando archivin"});
-    this.setState({ notifications: temp });
-    CoreSingleFile(fileList[0], this.props.options.config, this.state.items, 0, this.callbackCore.bind(this));
+    this.addNotification({type: 'info', message: 'enviando archivo ' + fileList[0].name });
+    console.log('handleDrop counter', this.notificationCounter);
+    CoreSingleFile(fileList[0], this.props.options.config, this.state.items, this.notificationCounter, this.callbackCore.bind(this));
   }
   handleClickDirectory(directory) {
     this.setState({
@@ -78,10 +74,9 @@ class UploadBox extends React.Component {
     return (
       <div className="upb_container">
         <h1>UploadBox</h1>
-        <Notifications notifications={this.state.notifications}></Notifications>
+        <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>
         <Menu id={this.state.id} directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} onClickDirectory={this.handleClickDirectory.bind(this)} onDrop={this.handleDrop.bind(this)}></Box>
-        <NotificationSystem ref="notificationSystem"/>
       </div>
     )
   }
