@@ -14,7 +14,10 @@ class Component extends React.Component {
         //extensionsBlock: ["exe", "xml", "flv", "mp3", "mp4", "avi", "wma"],
         allowDuplicates: false,
         extensions:["png", "jpeg", "gif", "pdf", "docx", "doc"],
-        iconHome: false
+        iconHome: false,
+        onSuccess: function(data, self){
+            console.log('onSuccess outside', data, self);
+        }
       }
       ,
    "Data":[

@@ -1,14 +1,16 @@
 import React from 'react'
+import AnimateCSS from 'animate.css'
 import './notifications.styl'
 
 class NotificationItem extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      type: this.props.type
+      type: this.props.type,
+      animate: 'bounceIn'
     }
     if(this.props.dissmiss !== 0)
-      this.handleDismiss(this.props.onDelete);
+      this.handleDismiss(this.props.onDelete).bind(this);
   }
   componentDidMount(){
     if(this.props.dissmiss !== 0)
@@ -16,8 +18,6 @@ class NotificationItem extends React.Component {
   }
   componentWillUpdate(nextProps, nextState){
     console.log('componentWillUpdate: ',nextProps, nextState);
-    // if(nextProps.dissmiss !== 0)
-    //   this.handleDismiss(this.props.onDelete);
   }
   componentDidUpdate(prevProps, prevState){
     if(this.props.dissmiss !== 0)
@@ -27,14 +27,18 @@ class NotificationItem extends React.Component {
     let time = this.props.dissmiss * 1000;
     console.log('handleDismiss: ', this.props, time);
     let props = this.props;
+    self = this;
     setTimeout(function(){
       console.log('inside timer');
-      callback(props);
-    }, 5000);
+      self.setState({animate: 'bounceOut'});
+      setTimeout(function(){
+        callback(props);
+      }, 2000);
+    }, time);
   }
   render(){
     return <div className="upb__itemnotification__wrapper">
-      <div className={'upb__notification__' + this.props.type}>
+      <div className={'upb__notification__' + this.props.type + ' animated ' + this.state.animate}>
         {this.props.message}
       </div>
     </div>
@@ -43,9 +47,9 @@ class NotificationItem extends React.Component {
 
 NotificationItem.propTypes = {
   onDelete: React.PropTypes.func,
-  type: React.PropTypes.String,
-  message: React.PropTypes.String,
-  dissmiss: React.PropTypes.Number
+  type: React.PropTypes.string,
+  message: React.PropTypes.string,
+  dissmiss: React.PropTypes.number
 }
 
 NotificationItem.defaultProps = {
@@ -71,7 +75,8 @@ class Notifications extends React.Component {
 }
 
 Notifications.propTypes = {
-  notifications: React.PropTypes.Array
+  notifications: React.PropTypes.array,
+  onDelete : React.PropTypes.func
 }
 Notifications.defaultProps = {
   notifications: []

@@ -53,11 +53,19 @@ function parseJSON(response) {
   return response.json();
 }
 
-function sendFile(file, notificationId, callback) {
+function sendFile(settings, file, notificationId, callback) {
   let formData = new FormData();
   formData.append(file.name, file);
-  fetch('/avatars', {
+  settings.onSuccess();
+  const header = new Headers({
+    'Access-Control-Allow-Origin':'',
+    'Content-Type': 'multipart/form-data'
+  });
+  fetch('http://www.mocky.io/v2/5185415ba171ea3a00704eed', {
+  //fetch('http://localhost:8080/apps2012/SvtGetCategoriesForProposal?lng=sp&code=&smeId=3083765&_=1490091083566', {
+  //fetch('/avatars', {
     method: 'POST',
+    //headers: header,
     body: formData
   }).then(checkStatus).then(parseJSON).then(function(data) {
     console.log('success', data);
@@ -95,7 +103,7 @@ function CoreSingleFile(file, settings, itemsBox, notificationId, callback){
   let settingsSingle = deepmerge.all([defaultSettings, settings]);
   let message = applyValidation(file, settingsSingle, itemsBox);
   if (message === undefined)
-    sendFile(file, notificationId, callback);
+    sendFile(settings, file, notificationId, callback);
   else {
     let dataResponse = {
       type: 'error',
