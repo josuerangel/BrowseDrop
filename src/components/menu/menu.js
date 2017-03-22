@@ -38,7 +38,7 @@ class Menu extends React.Component {
   }
   setDirectorys(){
     let arrDirectorys = [];
-    let parentId = this.props.id;
+    let parentId = this.props.directory.id;
     let index = 0;
     while (parentId !== 0){
       let itemDirectory = this.props.directorys.find((directory) => directory.id == parentId);

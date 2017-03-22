@@ -1,5 +1,4 @@
 import React from 'react'
-import classNames from 'classnames'
 import './file.styl'
 import { FaFolderOpen, FaFileO } from 'react-icons/lib/fa'
 //import FaFileO from 'react-icons/lib/fa/file-o'
@@ -13,11 +12,12 @@ class File extends React.Component {
   onClick(event){
     this.props.onClick(this.props.data);
   }
+  setAnimation(){
+    if(this.props.data.animationIn === undefined) return ""
+    else return this.props.data.animationIn
+  }
   render () {
-    let classLink = classNames({
-
-    });
-    return <div className="upb__itembox">
+    return <div className={"upb__itembox animated " + this.setAnimation()}>
       <div className="upb__itembox__iconName">
         {this.setIcon(this.props.data)}
         <a className="upb__itembox__name" href={this.props.data.urlDownload}
@@ -28,6 +28,11 @@ class File extends React.Component {
       </div>
     </div>
   }
+};
+
+File.propTypes = {
+  data: React.PropTypes.object,
+  onClick: React.PropTypes.func
 };
 
 module.exports = File

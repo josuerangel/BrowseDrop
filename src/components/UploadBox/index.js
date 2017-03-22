@@ -6,22 +6,21 @@ import {Core, CoreSingleFile} from '../../logic/core.js'
 import Notifications from '../notifications/notifications.js'
 
 class UploadBox extends React.Component {
+  arrDataOrinal : []
   arrDirectorys : []
   notificationCounter : null
   directoryHome : {}
   constructor(props) {
     super(props);
+    this.arrDataOrinal = this.props.options.Data;
     this.notificationCounter = 0;
-    this.arrDirectorys = this.props.options.Data.filter((item) => (item.type === "directory"));
-    let directory = this.arrDirectorys.filter((item) => (item.id === 0));
-    console.log('uploadbox constructor directory', directory);
-    this.directoryHome = directory[0];
-    console.log('uploadbox constructor directoryHome', this.directoryHome);
-    let arrBox = this.props.options.Data.filter((item) => (item.parentId === 0));
+    this.arrDirectorys = this.arrDataOrinal.filter((item) => (item.type === "directory"));
+    let directory = this.arrDirectorys.filter((item) => (item.id === 0))[0];
+    this.directoryHome = directory;
     this.state = {
       directory: directory,
       id: 0,
-      items: arrBox,
+      items: this.arrDataOrinal,
       notifications: []
     };
   }
@@ -43,6 +42,7 @@ class UploadBox extends React.Component {
     this.setState({ notifications: arrNotifications });
   }
   callbackCore(data) {
+    console.log('callbackCore: ', data);
     let arrNotifications = this.state.notifications.map((notification) => {
       console.log('callbackCore compare: ', notification, data);
       if(notification.id === data.idNotification){
@@ -53,7 +53,12 @@ class UploadBox extends React.Component {
       }
       return notification;
     });
-    console.log('callbackCore: ', arrNotifications);
+    let newItems = this.state.items;
+    data.item.animationIn = "bounceIn";
+    newItems.push(data.item);
+    console.log('callbackCore newItems: ', newItems);
+    this.setState({ items: newItems });
+    console.log('callbackCore notifications: ', arrNotifications);
     this.setState({ notifications: arrNotifications });
   }
   handleDrop(fileList, directory) {
@@ -65,15 +70,12 @@ class UploadBox extends React.Component {
   }
   handleClickDirectory(directory) {
     this.setState({
-      directory: directory,
-      id: directory.id,
-      items: this.props.options.Data.filter((item) => (item.parentId === directory.id))
+      directory: directory
     });
   }
-  handleClickMenu(menu) {
+  handleClickMenu(directory) {
     this.setState({
-      id: menu.id,
-      items: this.props.options.Data.filter((item) => (item.parentId === menu.id))
+      directory: directory
     })
   }
   render() {
@@ -81,7 +83,7 @@ class UploadBox extends React.Component {
       <div className="upb_container">
         <h1>UploadBox</h1>
         <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>
-        <Menu id={this.state.id} directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
+        <Menu directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} onClickDirectory={this.handleClickDirectory.bind(this)} onDrop={this.handleDrop.bind(this)}></Box>
       </div>
     )

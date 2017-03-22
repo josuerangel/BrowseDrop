@@ -26,9 +26,10 @@ class Box extends React.Component {
     }
   }
   setItemList() {
-    return this.props.data.map((item, index) => (item.type === "directory")
+    const arrBox = this.props.data.filter((item) => (item.parentId === this.props.directory.id));
+    return arrBox.map((item, index) => (item.type === "directory")
       ? <Directory key={index.toString()} data={item} onClick={this.props.onClickDirectory} onDrop={this.props.onDrop}/>
-      : <File key={index.toString()} data={item}/>)
+    : <File key={index.toString()} data={item} />)
   }
   render() {
     return <div>

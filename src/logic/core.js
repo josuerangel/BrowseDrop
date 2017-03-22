@@ -97,11 +97,18 @@ function sendFile(directory, settings, file, notificationId, callback) {
     };
     callback(message);
   }).catch(function(error) {
+    const item = {
+      id:10040,
+      parentId: 1,
+      name: "nuevo file.png",
+      modificado:"2016-09-26 17:44:10.0",
+      url:"../filter/SvtDownloadFile?nameFile=camio?n n?on?o.txt&urlFile=http://849078138bf0516a849b-abe673deb2d00134a784f52da04c0abd.r1.cf2.rackcdn.com/6986aa6fd2b9873d437d5f676fbacfa4.txt"
+    };
     const message = {
       status: "error",
       message: error.message + ' -- ' + error.response.url,
       idNotification: notificationId,
-      item: {}
+      item: item
     };
     callback(message);
   });
