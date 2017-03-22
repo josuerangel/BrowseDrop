@@ -6,8 +6,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --inline --port 3000",
-    "prepublish": "prepublish"
+    "start": "webpack-dev-server --inline --port 3000"
   },
   "dependencies": {
     "animate.css": "^3.5.2",
@@ -36,12 +35,11 @@
     "css-loader": "^0.26.2",
     "less": "^2.7.2",
     "less-loader": "^3.0.0",
-    "prepublish": "^0.13.3",
     "style-loader": "^0.13.2",
-    "stylus-loader": "^2.5.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.5.1",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2",
-    "yeticss": "^7.3.0"
+    "webpack-dev-server": "^1.16.2"
   },
   "jshintConfig": {
     "esversion": 6

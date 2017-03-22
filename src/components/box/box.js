@@ -26,9 +26,9 @@ class Box extends React.Component {
     }
   }
   setItemList() {
-    return this.props.data.map((item, index) => (item.url !== undefined)
-      ? <File key={index.toString()} data={item}/>
-      : <Directory key={index.toString()} data={item} onClick={this.props.onClickDirectory} onDrop={this.props.onDrop}/>)
+    return this.props.data.map((item, index) => (item.type === "directory")
+      ? <Directory key={index.toString()} data={item} onClick={this.props.onClickDirectory} onDrop={this.props.onDrop}/>
+      : <File key={index.toString()} data={item}/>)
   }
   render() {
     return <div>

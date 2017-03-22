@@ -8,11 +8,15 @@ import Notifications from '../notifications/notifications.js'
 class UploadBox extends React.Component {
   arrDirectorys : []
   notificationCounter : null
+  directoryHome : {}
   constructor(props) {
     super(props);
     this.notificationCounter = 0;
-    this.arrDirectorys = this.props.options.Data.filter((item) => (item.url === undefined));
+    this.arrDirectorys = this.props.options.Data.filter((item) => (item.type === "directory"));
     let directory = this.arrDirectorys.filter((item) => (item.id === 0));
+    console.log('uploadbox constructor directory', directory);
+    this.directoryHome = directory[0];
+    console.log('uploadbox constructor directoryHome', this.directoryHome);
     let arrBox = this.props.options.Data.filter((item) => (item.parentId === 0));
     this.state = {
       directory: directory,
@@ -41,9 +45,9 @@ class UploadBox extends React.Component {
   callbackCore(data) {
     let arrNotifications = this.state.notifications.map((notification) => {
       console.log('callbackCore compare: ', notification, data);
-      if(notification.id === data.id){
+      if(notification.id === data.idNotification){
         console.log('callbackCore modify: ', data);
-        notification.type = data.type;
+        notification.type = data.status;
         notification.message = data.message;
         notification.dissmiss = 10;
       }
@@ -55,7 +59,9 @@ class UploadBox extends React.Component {
   handleDrop(fileList, directory) {
     this.addNotification({type: 'info', message: 'enviando archivo ' + fileList[0].name });
     console.log('handleDrop counter', this.notificationCounter);
-    CoreSingleFile(fileList[0], this.props.options.config, this.state.items, this.notificationCounter, this.callbackCore.bind(this));
+    let settings = this.props.options.config;
+    settings.directoryHome = this.directoryHome;
+    CoreSingleFile(directory, fileList[0], settings, this.state.items, this.notificationCounter, this.callbackCore.bind(this));
   }
   handleClickDirectory(directory) {
     this.setState({

@@ -53,30 +53,57 @@ function parseJSON(response) {
   return response.json();
 }
 
-function sendFile(settings, file, notificationId, callback) {
+function sendFile(directory, settings, file, notificationId, callback) {
+  console.log('sendFile: ', directory, settings, file, notificationId, callback);
+
   let formData = new FormData();
   formData.append(file.name, file);
-  settings.onSuccess();
-  const header = new Headers({
-    'Access-Control-Allow-Origin':'',
-    'Content-Type': 'multipart/form-data'
-  });
-  fetch('http://www.mocky.io/v2/5185415ba171ea3a00704eed', {
-  //fetch('http://localhost:8080/apps2012/SvtGetCategoriesForProposal?lng=sp&code=&smeId=3083765&_=1490091083566', {
-  //fetch('/avatars', {
+
+  if(typeof settings.onSuccess == 'function')
+    settings.onSuccess();
+
+
+  /**
+   * Set url to send file, check url direcotry selected if don't existe value,
+   * use url value from directory Home, if necessary existe someone url
+   */
+  let urlToSend = "";
+  if (directory.url !== undefined && directory.url !== "")
+    urlToSend = directory.url;
+  else
+    urlToSend = settings.directoryHome.url;
+  if (urlToSend === "") console.log('Is necessary someone url to send file');
+
+  /**
+   * Set extra data for request, merge directory selected with directory home
+   */
+  let extraDataDirectory = (directory.extraDataRequest !== undefined) ? directory.extraDataRequest : {};
+  let extraDataHome = (settings.directoryHome.extraDataRequest !== undefined) ? settings.directoryHome.extraDataRequest : {};
+  let extraData = deepmerge.all([{}, extraDataHome, extraDataDirectory]);
+  if (extraData !== undefined)
+    for (let attr in extraData)
+      formData.append(attr, extraData[attr]);
+
+  fetch(urlToSend, {
     method: 'POST',
-    //headers: header,
     body: formData
   }).then(checkStatus).then(parseJSON).then(function(data) {
     console.log('success', data);
-    callback(data);
-  }).catch(function(error) {
-    let errorMessage = {
-      type: 'error',
-      message: error.message + ' -- ' + error.response.url,
-      id: notificationId
+    const message = {
+      status: (data.status !== undefined) ? data.status : "error",
+      message: (data.message !== undefined) ? data.message : "",
+      idNotification : notificationId,
+      item: (data.item !== undefined) ? data.item : {}
     };
-    callback(errorMessage);
+    callback(message);
+  }).catch(function(error) {
+    const message = {
+      status: "error",
+      message: error.message + ' -- ' + error.response.url,
+      idNotification: notificationId,
+      item: {}
+    };
+    callback(message);
   });
 }
 
@@ -99,11 +126,12 @@ function processFile(file, settings, itemsBox, callback) {
     callback(message);
 }
 
-function CoreSingleFile(file, settings, itemsBox, notificationId, callback){
+function CoreSingleFile(directory, file, settings, itemsBox, notificationId, callback){
+  console.log('CoreSingleFile: ', directory, file, settings, itemsBox, notificationId, callback);
   let settingsSingle = deepmerge.all([defaultSettings, settings]);
   let message = applyValidation(file, settingsSingle, itemsBox);
   if (message === undefined)
-    sendFile(settings, file, notificationId, callback);
+    sendFile(directory, settings, file, notificationId, callback);
   else {
     let dataResponse = {
       type: 'error',

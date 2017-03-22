@@ -16,7 +16,7 @@ class Component extends React.Component {
         extensions:["png", "jpeg", "gif", "pdf", "docx", "doc"],
         iconHome: false,
         onSuccess: function(data, self){
-            console.log('onSuccess outside', data, self);
+            console.log('onSuccess outside yeahhh!!', data, self);
         }
       }
       ,
@@ -24,7 +24,12 @@ class Component extends React.Component {
      {
        "id": 0,
        "name": "home",
-       "drag": true
+       "drag": true,
+       "type": "directory",
+       "url": "../SvtFileUpload",
+       "extraDataRequest": {
+         "smeId": "00000000"
+       }
      },
       {
          "id":82,
@@ -76,6 +81,8 @@ class Component extends React.Component {
          "parentId":0,
          "name":"Datos generales",
          "drag":true,
+         "type": "directory",
+         "url": "../SvtFilesUpload",
          "extraDataRequest":{
             "smeId":"3083765",
             "subscriptionId":"3084090",
@@ -90,6 +97,7 @@ class Component extends React.Component {
          "parentId":1,
          "name":"Documentación administrativa y legal",
          "drag":true,
+         "type": "directory",
          "extraDataRequest":{
             "smeId":"3083765",
             "subscriptionId":"3084090",
@@ -104,20 +112,14 @@ class Component extends React.Component {
          "parentId":0,
          "name":"Documentación complementaria",
          "drag":true,
-         "extraDataRequest":{
-            "smeId":"3083765",
-            "subscriptionId":"3084090",
-            "actId":"3",
-            "lng":"sp",
-            "categoryFileId":6,
-            "categoryProposalId":6
-         }
-      },
+         "type": "directory"
+       },
       {
          "id":5,
          "parentId":0,
          "name":"Documentación financiera",
          "drag":true,
+         "type": "directory",
          "extraDataRequest":{
             "smeId":"3083765",
             "subscriptionId":"3084090",
@@ -207,6 +209,7 @@ class Component extends React.Component {
          "parentId":0,
          "name":"Propuesta económica",
          "drag":true,
+         "type": "directory",
          "extraDataRequest":{
             "smeId":"3083765",
             "subscriptionId":"3084090",
@@ -221,6 +224,7 @@ class Component extends React.Component {
          "parentId":0,
          "name":"Propuesta técnica",
          "drag":true,
+         "type": "directory",
          "extraDataRequest":{
             "smeId":"3083765",
             "subscriptionId":"3084090",

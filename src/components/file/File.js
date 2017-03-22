@@ -6,7 +6,7 @@ import { FaFolderOpen, FaFileO } from 'react-icons/lib/fa'
 
 class File extends React.Component {
   setIcon(item){
-    return (item.url === undefined)
+    return (item.type === "directory")
       ? <FaFolderOpen className="upb__itembox__icon" />
       : <FaFileO className="upb__itembox__icon"/>;
   }
