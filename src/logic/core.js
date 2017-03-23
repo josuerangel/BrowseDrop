@@ -59,10 +59,6 @@ function sendFile(directory, settings, file, notificationId, callback) {
   let formData = new FormData();
   formData.append(file.name, file);
 
-  if(typeof settings.onSuccess == 'function')
-    settings.onSuccess();
-
-
   /**
    * Set url to send file, check url direcotry selected if don't existe value,
    * use url value from directory Home, if necessary existe someone url
@@ -84,32 +80,42 @@ function sendFile(directory, settings, file, notificationId, callback) {
     for (let attr in extraData)
       formData.append(attr, extraData[attr]);
 
+  /**
+   * Send file to url
+   */
   fetch(urlToSend, {
     method: 'POST',
+    credentials: 'same-origin',
     body: formData
   }).then(checkStatus).then(parseJSON).then(function(data) {
-    console.log('success', data);
-    const message = {
+    console.log('sendFile success: ', data);
+
+    let message = {};
+
+    message = {
       status: (data.status !== undefined) ? data.status : "error",
       message: (data.message !== undefined) ? data.message : "",
+      item: (data.item !== undefined) ? data.item : {},
       idNotification : notificationId,
-      item: (data.item !== undefined) ? data.item : {}
     };
+    console.log('sendFile success message: ', message);
+
+    if(typeof settings.onSuccess === 'function'){
+      message = settings.onSuccess(data);
+      message.idNotification = notificationId;
+      console.log('sendFile success message after urser function: ', message);
+    }
+
     callback(message);
   }).catch(function(error) {
-    const item = {
-      id:10040,
-      parentId: 1,
-      name: "nuevo file.png",
-      modificado:"2016-09-26 17:44:10.0",
-      url:"../filter/SvtDownloadFile?nameFile=camio?n n?on?o.txt&urlFile=http://849078138bf0516a849b-abe673deb2d00134a784f52da04c0abd.r1.cf2.rackcdn.com/6986aa6fd2b9873d437d5f676fbacfa4.txt"
-    };
+    console.log('sendFile error: ', error);
     const message = {
       status: "error",
-      message: error.message + ' -- ' + error.response.url,
+      message: error.response.status + " - " + error.message + ' -- ' + error.response.url,
       idNotification: notificationId,
-      item: item
+      item: {}
     };
+    console.log('sendFile error message: ', message);
     callback(message);
   });
 }
@@ -135,16 +141,18 @@ function processFile(file, settings, itemsBox, callback) {
 
 function CoreSingleFile(directory, file, settings, itemsBox, notificationId, callback){
   console.log('CoreSingleFile: ', directory, file, settings, itemsBox, notificationId, callback);
-  let settingsSingle = deepmerge.all([defaultSettings, settings]);
+  const settingsSingle = deepmerge.all([defaultSettings, settings]);
   let message = applyValidation(file, settingsSingle, itemsBox);
   if (message === undefined)
     sendFile(directory, settings, file, notificationId, callback);
   else {
-    let dataResponse = {
-      type: 'error',
+    const dataResponse = {
+      status: 'error',
       message: message,
-      notificationId: notificationId
+      idNotification: notificationId,
+      item: {}
     };
+    console.log('CoreSingleFile before to callback dataResponse: ', dataResponse);
     callback(dataResponse);
   }
 }

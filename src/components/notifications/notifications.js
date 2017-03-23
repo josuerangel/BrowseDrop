@@ -9,25 +9,35 @@ class NotificationItem extends React.Component {
       type: this.props.type,
       animate: 'bounceIn'
     }
-    if(this.props.dissmiss !== 0)
+    console.log('NotificationItem constructor: ', this);
+    if(this.props.dissmiss !== 0){
+      console.log('wathHappend this: ', this);
       this.handleDismiss(this.props.onDelete).bind(this);
+    }
   }
   componentDidMount(){
-    if(this.props.dissmiss !== 0)
-      this.handleDismiss(this.props.onDelete);
+    console.log('componentDidMount: before wait...');
+    setTimeout(function(){
+      console.log('componentDidMount wait .... ');
+    }, 2000);
+    // if(this.props.dissmiss !== 0)
+    //   this.handleDismiss(this.props.onDelete);
   }
   componentWillUpdate(nextProps, nextState){
-    console.log('componentWillUpdate: ',nextProps, nextState);
+    console.log('componentWillUpdate: ', nextProps, nextState);
   }
   componentDidUpdate(prevProps, prevState){
+    console.log("componentDidUpdate: ", prevProps, prevState);
     if(this.props.dissmiss !== 0)
       this.handleDismiss(this.props.onDelete);
   }
   handleDismiss(callback){
     let time = this.props.dissmiss * 1000;
     console.log('handleDismiss: ', this.props, time);
+
     let props = this.props;
     self = this;
+    console.log('handleDismiss self: ', self);
     setTimeout(function(){
       console.log('inside timer');
       self.setState({animate: 'bounceOut'});

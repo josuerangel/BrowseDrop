@@ -34,6 +34,7 @@ class UploadBox extends React.Component {
     let arrNotifications = this.state.notifications;
     arrNotifications.push(_notification);
     this.setState({ notifications: arrNotifications });
+    console.log('addNotification finish: ', options);
   }
   deleteNotification(notification){
     console.log('deleteNotification: ', notification);
@@ -45,7 +46,7 @@ class UploadBox extends React.Component {
     console.log('callbackCore: ', data);
     let arrNotifications = this.state.notifications.map((notification) => {
       console.log('callbackCore compare: ', notification, data);
-      if(notification.id === data.idNotification){
+      if(notification.id === data.idNotification || notification.id === data.notificationId){
         console.log('callbackCore modify: ', data);
         notification.type = data.status;
         notification.message = data.message;
@@ -53,11 +54,13 @@ class UploadBox extends React.Component {
       }
       return notification;
     });
-    let newItems = this.state.items;
-    data.item.animationIn = "bounceIn";
-    newItems.push(data.item);
-    console.log('callbackCore newItems: ', newItems);
-    this.setState({ items: newItems });
+    if (data.item !== undefined){
+      let newItems = this.state.items;
+      data.item.animationIn = "bounceIn";
+      newItems.push(data.item);
+      console.log('callbackCore newItems: ', newItems);
+      this.setState({ items: newItems });
+    }
     console.log('callbackCore notifications: ', arrNotifications);
     this.setState({ notifications: arrNotifications });
   }
@@ -66,7 +69,11 @@ class UploadBox extends React.Component {
     console.log('handleDrop counter', this.notificationCounter);
     let settings = this.props.options.config;
     settings.directoryHome = this.directoryHome;
-    CoreSingleFile(directory, fileList[0], settings, this.state.items, this.notificationCounter, this.callbackCore.bind(this));
+    console.log('handleDrop before call CoreSingleFile: ');
+    const self = this;
+    setTimeout(function(){
+      CoreSingleFile(directory, fileList[0], settings, self.state.items, self.notificationCounter, self.callbackCore.bind(self));
+    },2000);
   }
   handleClickDirectory(directory) {
     this.setState({
@@ -81,7 +88,6 @@ class UploadBox extends React.Component {
   render() {
     return (
       <div className="upb_container">
-        <h1>UploadBox</h1>
         <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>
         <Menu directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} onClickDirectory={this.handleClickDirectory.bind(this)} onDrop={this.handleDrop.bind(this)}></Box>
