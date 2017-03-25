@@ -1,5 +1,6 @@
 import React from 'react'
 import AnimateCSS from 'animate.css'
+import Alert from 'react-bootstrap/lib/Alert'
 import './notifications.styl'
 
 class NotificationItem extends React.Component {
@@ -50,6 +51,11 @@ class NotificationItem extends React.Component {
     return <div className="upb__itemnotification__wrapper">
       <div className={'upb__notification__' + this.props.type + ' animated ' + this.state.animate}>
         {this.props.message}
+      </div>
+      <div className={"testContainerFixed"}>
+      <Alert bsStyle="warning">
+        <strong>Holitas ....</strong>
+      </Alert>
       </div>
     </div>
   }

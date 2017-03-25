@@ -1,6 +1,7 @@
 import React from 'react';
 import './menu.styl';
-import { TiHome, TiHomeOutline, TiChevronRightOutline } from 'react-icons/lib/ti'
+import TiHomeOutline from 'react-icons/lib/ti/home-outline'
+import TiChevronRightOutline from 'react-icons/lib/ti/chevron-right-outline'
 
 class MenuItem extends React.Component {
   handleClick(event){

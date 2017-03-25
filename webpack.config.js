@@ -82,15 +82,14 @@ module.exports = {
   //     new webpack.optimize.UglifyJsPlugin(),
   ],
   resolve: {
-    // alias: {
-    //   'react': path.join(__dirname, 'node_modules', 'react')
-    // },
+    alias: {
+      'react': path.join(__dirname, 'node_modules', 'react')
+    },
     extensions: ['', '.js', '.jsx', '.styl']
-  }
-    // externals: {
-    //     'react': { commonjs: 'react', commonjs2: 'react', amd: 'react', root: 'React' },
-    //     'react-dom': { commonjs: 'react-dom', commonjs2: 'react-dom', amd: 'react-dom', root: 'ReactDOM' },
-    //     'react-addons-css-transition-group': { commonjs: 'react-addons-css-transition-group', commonjs2: 'react-addons-css-transition-group', amd: 'react-addons-css-transition-group', root: ['React','addons','CSSTransitionGroup'] }
-    //   }
+  },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+   }
   //devtool: "cheap-module-eval-source-map"
 };

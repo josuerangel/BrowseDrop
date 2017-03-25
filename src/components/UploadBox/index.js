@@ -1,4 +1,5 @@
 import React from 'react'
+import { ReactDOM } from 'react-dom'
 import Menu from '../menu/menu'
 import Box from '../box/box'
 import './uploadbox.styl'
@@ -65,12 +66,12 @@ class UploadBox extends React.Component {
     this.setState({ notifications: arrNotifications });
   }
   handleDrop(fileList, directory) {
+    const self = this;
     this.addNotification({type: 'info', message: 'enviando archivo ' + fileList[0].name });
     console.log('handleDrop counter', this.notificationCounter);
     let settings = this.props.options.config;
     settings.directoryHome = this.directoryHome;
     console.log('handleDrop before call CoreSingleFile: ');
-    const self = this;
     setTimeout(function(){
       CoreSingleFile(directory, fileList[0], settings, self.state.items, self.notificationCounter, self.callbackCore.bind(self));
     },2000);
@@ -88,10 +89,10 @@ class UploadBox extends React.Component {
   render() {
     return (
       <div className="upb_container">
-        <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>
         <Menu directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} onClickDirectory={this.handleClickDirectory.bind(this)} onDrop={this.handleDrop.bind(this)}></Box>
-      </div>
+        <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>
+    </div>
     )
   }
 }
