@@ -6,6 +6,30 @@ import './uploadbox.styl'
 import {Core, CoreSingleFile} from '../../logic/core.js'
 import Notifications from '../notifications/notifications.js'
 
+if (!Array.prototype.find) {
+  Array.prototype.find = function(predicate) {
+    'use strict';
+    if (this == null) {
+      throw new TypeError('Array.prototype.find called on null or undefined');
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('predicate must be a function');
+    }
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
+
+    for (var i = 0; i < length; i++) {
+      value = list[i];
+      if (predicate.call(thisArg, value, i, list)) {
+        return value;
+      }
+    }
+    return undefined;
+  };
+}
+
 class UploadBox extends React.Component {
   arrDataOrinal : []
   arrDirectorys : []
@@ -25,13 +49,22 @@ class UploadBox extends React.Component {
       notifications: []
     };
   }
-  addNotification(options) {
+  addNotification(options, file) {
     this.notificationCounter++;
     let _notification = {
       id: this.notificationCounter,
       type: options.type,
       message: options.message
     };
+    if (file !== undefined){
+      console.log('addNotification file: ', file);
+      _notification.file = {
+        name : file.name,
+        lastModified: file.lastModified,
+        size: file.size,
+        type: file.type
+      }
+    }
     let arrNotifications = this.state.notifications;
     arrNotifications.push(_notification);
     this.setState({ notifications: arrNotifications });
@@ -67,7 +100,7 @@ class UploadBox extends React.Component {
   }
   handleDrop(fileList, directory) {
     const self = this;
-    this.addNotification({type: 'info', message: 'enviando archivo ' + fileList[0].name });
+    this.addNotification({type: 'info', message: 'validando archivo ' + fileList[0].name }, fileList[0]);
     console.log('handleDrop counter', this.notificationCounter);
     let settings = this.props.options.config;
     settings.directoryHome = this.directoryHome;
@@ -90,7 +123,7 @@ class UploadBox extends React.Component {
     return (
       <div className="upb_container">
         <Menu directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
-        <Box directory={this.state.directory} data={this.state.items} onClickDirectory={this.handleClickDirectory.bind(this)} onDrop={this.handleDrop.bind(this)}></Box>
+        <Box directory={this.state.directory} data={this.state.items} caption={this.props.options.config.caption} onClickDirectory={this.handleClickDirectory.bind(this)} onDrop={this.handleDrop.bind(this)}></Box>
         <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>
     </div>
     )

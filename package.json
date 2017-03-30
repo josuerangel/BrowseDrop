@@ -25,6 +25,7 @@
     "react-bootstrap": "^0.30.8",
     "react-dom": "^15.3.2",
     "react-icons": "^2.2.3",
+    "react-spinkit": "^2.1.1",
     "webpack": "^1.13.3",
     "whatwg-fetch": "^2.0.3"
   },

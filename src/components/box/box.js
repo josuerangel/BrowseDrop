@@ -6,6 +6,7 @@ import FileDragAndDrop from '../FileDragAndDrop'
 import classNames from 'classnames'
 import './box.styl'
 import ZoneDrop from '../zonedrop/zonedrop.js'
+import Grid from 'react-bootstrap/lib/Grid'
 
 class BoxList extends ZoneDrop {
   render() {
@@ -29,7 +30,7 @@ class Box extends React.Component {
     const arrBox = this.props.data.filter((item) => (item.parentId === this.props.directory.id));
     return arrBox.map((item, index) => (item.type === "directory")
       ? <Directory key={index.toString()} data={item} onClick={this.props.onClickDirectory} onDrop={this.props.onDrop}/>
-    : <File key={index.toString()} data={item} />)
+    : <File key={index.toString()} data={item} caption={this.props.caption} />)
   }
   render() {
     return <div>

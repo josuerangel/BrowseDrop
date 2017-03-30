@@ -110,7 +110,7 @@ function sendFile(directory, settings, file, notificationId, callback) {
   }).catch(function(error) {
     console.log('sendFile error: ', error);
     const message = {
-      status: "error",
+      status: "danger",
       message: error.response.status + " - " + error.message + ' -- ' + error.response.url,
       idNotification: notificationId,
       item: {}
@@ -143,11 +143,19 @@ function CoreSingleFile(directory, file, settings, itemsBox, notificationId, cal
   console.log('CoreSingleFile: ', directory, file, settings, itemsBox, notificationId, callback);
   const settingsSingle = deepmerge.all([defaultSettings, settings]);
   let message = applyValidation(file, settingsSingle, itemsBox);
-  if (message === undefined)
-    sendFile(directory, settings, file, notificationId, callback);
+  if (message === undefined){
+    const dataResponse = {
+      status: 'success',
+      message: "enviando archivin....!!!",
+      idNotification: notificationId,
+      item: {}
+    };
+    //callback(dataResponse);
+    //sendFile(directory, settings, file, notificationId, callback);
+  }
   else {
     const dataResponse = {
-      status: 'error',
+      status: 'danger',
       message: message,
       idNotification: notificationId,
       item: {}
