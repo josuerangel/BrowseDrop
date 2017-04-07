@@ -1,15 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
+import ZoneDrop from '../zonedrop/zonedrop.js'
 import File from '../file/File';
 import FileDragAndDrop from '../FileDragAndDrop';
 import './directory.styl';
 
-class Directory extends React.Component {
+class Directory extends ZoneDrop {
     constructor(){
         super();
         this.state = {
             isDragEnter: false
-        }
+        };
     }
     handleDrop(dataTransfer, event) {
       this.setState({isDragEnter: false});
@@ -19,16 +20,19 @@ class Directory extends React.Component {
       event.preventDefault();
       event.stopPropagation();
       this.setState({isDragEnter: true});
+      this.props.onDragEnter(this.props.data);
     }
     handleDragLeave(event){
       event.preventDefault();
       event.stopPropagation();
       this.setState({isDragEnter: false});
+      this.props.onDragLeave(this.props.data);
     }
     handleDragOver(event){
         event.preventDefault();
         event.stopPropagation();
         this.setState({isDragEnter: true});
+        this.props.onDragOver(this.props.data);
     }
     render() {
         var directoryClass = classNames({

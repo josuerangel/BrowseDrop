@@ -11,6 +11,7 @@ import Modal from 'react-bootstrap/lib/Modal'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import Row from 'react-bootstrap/lib/Row'
 
+
 class File extends React.Component {
   caption : {}
   constructor(props){
@@ -65,6 +66,14 @@ class File extends React.Component {
   closeModal(){
     this.setState({ showModal: false });
   }
+  sendDeleteFile(e){
+    console.log(e);
+    console.log(this.props);
+    this.props.onDeleteFile(this.props.data);
+    // CoreDeleteFile(this.props.data, this.props.directoryHome, this.props.settings, function(data){
+    //   console.log('termina delete', data);
+    // });
+  }
   render () {
     let modalInstance = null;
     if (this.caption !== undefined){
@@ -78,7 +87,7 @@ class File extends React.Component {
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.closeModal.bind(this)}>Close</Button>
-            <Button bsStyle="primary">Save changes</Button>
+            <Button bsStyle="primary" onClick={this.sendDeleteFile.bind(this)}>Save changes</Button>
           </Modal.Footer>
         </Modal>
     );

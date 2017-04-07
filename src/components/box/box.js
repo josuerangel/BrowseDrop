@@ -29,13 +29,23 @@ class Box extends React.Component {
   setItemList() {
     const arrBox = this.props.data.filter((item) => (item.parentId === this.props.directory.id));
     return arrBox.map((item, index) => (item.type === "directory")
-      ? <Directory key={index.toString()} data={item} onClick={this.props.onClickDirectory} onDrop={this.props.onDrop}/>
-    : <File key={index.toString()} data={item} caption={this.props.caption} />)
+      ? <Directory key={index.toString()} data={item} onClick={this.props.onClickDirectory}
+      onDrop={this.props.onDrop} onDragEnter={this.props.onDragEnter}
+      onDragOver={this.props.onDragOver} onDragLeave={this.props.onDragLeave} />
+    : <File key={index.toString()} data={item} caption={this.props.caption}
+      directoryHome={this.props.directoryHome}
+      settings={this.props.settings}
+      onDeleteFile={this.props.onDeleteFile}/>)
   }
   render() {
     return <div>
       <BoxHeader></BoxHeader>
-      <BoxList data={this.props.directory} items={this.setItemList()} onDrop={this.props.onDrop}></BoxList>
+      <BoxList data={this.props.directory} items={this.setItemList()}
+        onDrop={this.props.onDrop}
+        onDragEnter={this.props.onDragEnter}
+        onDragOver={this.props.onDragOver}
+        onDragLeave={this.props.onDragLeave}>
+      </BoxList>
     </div>
   }
 };

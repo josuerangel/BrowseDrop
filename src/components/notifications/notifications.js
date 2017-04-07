@@ -3,7 +3,6 @@ import AnimateCSS from 'animate.css'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import Alert from 'react-bootstrap/lib/Alert'
-import Spinner from 'react-spinkit'
 import './notifications.styl'
 import FaFolderOpen from 'react-icons/lib/fa/folder-open'
 
@@ -14,9 +13,7 @@ class NotificationItem extends React.Component {
       type: this.props.type,
       animate: 'bounceIn'
     }
-    console.log('NotificationItem constructor: ', this);
     if (this.props.dissmiss !== 0) {
-      console.log('wathHappend this: ', this);
       this.handleDismiss(this.props.onDelete).bind(this);
     }
   }
@@ -41,7 +38,7 @@ class NotificationItem extends React.Component {
     console.log('handleDismiss: ', this.props, time);
 
     let props = this.props;
-    self = this;
+    let self = this;
     console.log('handleDismiss self: ', self);
     setTimeout(function() {
       console.log('inside timer');
@@ -53,7 +50,11 @@ class NotificationItem extends React.Component {
   }
   setSpinner(){
     if (this.props.type === "info")
-      return <Spinner  spinnerName="wave"></Spinner>
+      return <div className="containerSpinner pull-left">
+			 		<div className="spinner"><div className="rect1"></div>
+			 		<div className="rect2"></div><div className="rect3"></div>
+		 				<div className="rect4"></div><div className="rect5"></div></div>
+			 		</div>
   }
   render() {
     return <ListGroupItem className={' animated ' + this.state.animate} bsStyle={this.props.type}>
@@ -71,7 +72,7 @@ class NotificationItem extends React.Component {
         </div>
       </div>
       <div className={"upb__notifications__action"}>
-      <div className={"upb__notifications__action__message"}>{"Validando"}</div>
+      <div className={"upb__notifications__action__message"}>{this.props.message}</div>
       <div className={"upb__notifications__action__spinner"}>
         {this.setSpinner()}
       </div>
@@ -99,7 +100,6 @@ class Notifications extends React.Component {
     super(props)
   }
   setNotifications() {
-    console.log('notificationSystem: ', this.props.notifications);
     if (this.props.notifications.length === 0)
       return [];
     return this.props.notifications.map((notification, index) => <NotificationItem key={index.toString()} id={notification.id} type={notification.type} message={notification.message} dissmiss={notification.dissmiss} onDelete={this.props.onDelete} dataFile={notification.file}></NotificationItem>)

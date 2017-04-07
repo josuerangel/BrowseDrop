@@ -1,6 +1,35 @@
 import deepmerge from 'deepmerge';
 import 'whatwg-fetch';
 
+if (!Array.prototype.includes) {
+  Array.prototype.includes = function(searchElement /*, fromIndex*/ ) {
+    'use strict';
+    var O = Object(this);
+    var len = parseInt(O.length) || 0;
+    if (len === 0) {
+      return false;
+    }
+    var n = parseInt(arguments[1]) || 0;
+    var k;
+    if (n >= 0) {
+      k = n;
+    } else {
+      k = len + n;
+      if (k < 0) {k = 0;}
+    }
+    var currentElement;
+    while (k < len) {
+      currentElement = O[k];
+      if (searchElement === currentElement ||
+         (searchElement !== searchElement && currentElement !== currentElement)) {
+        return true;
+      }
+      k++;
+    }
+    return false;
+  };
+}
+
 let defaultSettings = {
   caption: {
     maxSize: "El archivo es muy grande",
@@ -12,13 +41,17 @@ let defaultSettings = {
 };
 
 function allowDuplicates(itemsBox, file, allow) {
+  console.log('validations allowDuplicates: ', itemsBox, file, allow);
   if (allow === undefined) return false;
-  for (const item of itemsBox)
-    if (item.name === file.name) return true;
+  /*for (let item of itemsBox)
+    if (item.name === file.name) return true;*/
+  for (let x = 0, len = itemsBox.length; x < len; x++)
+      if (itemsBox[x].name === file.name) return true;
   return false;
 }
 
 function maxSize(file, maxSize) {
+  console.log('validations maxSize: ', file, maxSize);
   if (maxSize === undefined) return true;
   return (file.size > maxSize * 1024 * 1024) ? false : true;
 }
@@ -30,11 +63,13 @@ function getExtension(fileName) {
 }
 
 function extensions(file, extensions) {
+  console.log('validations extensions: ', file, extensions);
   if (extensions === undefined) return true;
   return extensions.includes(getExtension(file.name));
 }
 
 function extensionsBlock(file, extensionsBlock) {
+  console.log('validations extensionsBlock: ', file, extensionsBlock);
   if (extensionsBlock === undefined) return false;
   return extensionsBlock.includes(getExtension(file.name));
 }
@@ -58,6 +93,7 @@ function sendFile(directory, settings, file, notificationId, callback) {
 
   let formData = new FormData();
   formData.append(file.name, file);
+  console.log('sendFile formData: ', formData);
 
   /**
    * Set url to send file, check url direcotry selected if don't existe value,
@@ -79,6 +115,7 @@ function sendFile(directory, settings, file, notificationId, callback) {
   if (extraData !== undefined)
     for (let attr in extraData)
       formData.append(attr, extraData[attr]);
+  console.log('sendFile extraData OK');
 
   /**
    * Send file to url
@@ -128,6 +165,7 @@ function applyValidation(file, settings, itemsBox) {
   if (!maxSize(file, 40)) return settings.caption.maxSize;
   if (extensionsBlock(file, settings.extensionsBlock)) return settings.caption.extensionsBlock;
   if (allowDuplicates(itemsBox, file, settings.allowDuplicates)) return settings.caption.allowDuplicates;
+  console.log('applyValidation finish');
 }
 
 
@@ -142,22 +180,27 @@ function processFile(file, settings, itemsBox, callback) {
 function CoreSingleFile(directory, file, settings, itemsBox, notificationId, callback){
   console.log('CoreSingleFile: ', directory, file, settings, itemsBox, notificationId, callback);
   const settingsSingle = deepmerge.all([defaultSettings, settings]);
+  console.log('CoreSingleFile deepmerge: ', settingsSingle);
   let message = applyValidation(file, settingsSingle, itemsBox);
+  console.log('CoreSingleFile applyValidation: ', message);
   if (message === undefined){
     const dataResponse = {
-      status: 'success',
-      message: "enviando archivin....!!!",
+      status: 'info',
+      message: "Enviando",
       idNotification: notificationId,
       item: {}
     };
-    //callback(dataResponse);
-    //sendFile(directory, settings, file, notificationId, callback);
+    callback(dataResponse);
+    setTimeout(function(){
+      sendFile(directory, settings, file, notificationId, callback);
+    },1000);
   }
   else {
     const dataResponse = {
       status: 'danger',
       message: message,
       idNotification: notificationId,
+      dissmiss: 10,
       item: {}
     };
     console.log('CoreSingleFile before to callback dataResponse: ', dataResponse);
