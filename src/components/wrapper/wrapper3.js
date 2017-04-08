@@ -1,4 +1,5 @@
 import React from 'react'
+import 'babel-polyfill';
 import UploadBox from '../UploadBox'
 
 function renderUploadBox(options, container, callback){

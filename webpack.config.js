@@ -4,21 +4,20 @@ var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: __dirname + '/src',
+    app: [__dirname + '/src'],
     components: [__dirname + '/src/components/Component.js'],
     uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js'],
     uploadBoxStandAlone : [__dirname + '/src/components/UploadBox/index.js'],
-    uploadBox2: [__dirname + '/src/components/wrapper/wrapper3.js']
+    uploadBox2: ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/wrapper3.js']
   },
   output: {
-    //path: './bin',
     path: './bundles',
-    //path: path.resolve(__dirname, "build"),
     filename: '[name].js',
-    //filename: 'uploadBox.js'
     publicPath: '/bundles/'
   },
-  devtool: "source-map",
+  devtool: "cheap-module-source-map",
+  //devtool: "source-map",
+  //devtool: "cheap-module-eval-source-map",
   module: {
     loaders: [
       {
@@ -28,14 +27,16 @@ module.exports = {
         exclude: '/node_modules/'
       },
       {
+        // whatwg-fetch use Promsie which IE11 doesn't support
+        test: /\.js$/,
+        include: [/whatwg-.*/],
+        loader: 'babel'
+      },
+      {
         test: /\.css$/,
         loader:'style!css!'
       },
-       { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
-       {
-           test: /\.less$/,
-           loader: "less-loader" // compiles Less to CSS
-       }
+       { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
     ],
     rules: [
         {
@@ -45,29 +46,15 @@ module.exports = {
         {
           test: /\.styl$/,
           use: ['style-loader', 'css-loader', 'stylus-loader'],
-        },
-        {
-            test: /\.less$/,
-            use: [{
-                loader: "style-loader" // creates style nodes from JS strings
-            }, {
-                loader: "css-loader" // translates CSS into CommonJS
-            }, {
-                loader: "less-loader" // compiles Less to CSS
-            }]
         }
       ]
   },
   plugins: [
-      new webpack.ProvidePlugin({
-              Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
-              fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-         }),
-        //  new webpack.DefinePlugin({
-        //        'process.env':{
-        //          'NODE_ENV': JSON.stringify('production')
-        //        }
-        //      }),
+         new webpack.DefinePlugin({
+               'process.env':{
+                 'NODE_ENV': JSON.stringify('production')
+               }
+             }),
         //      new webpack.optimize.UglifyJsPlugin({
         //        compress:{
         //          warnings: true
@@ -90,6 +77,5 @@ module.exports = {
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM'
-   }
-  //devtool: "cheap-module-eval-source-map"
+  }
 };
