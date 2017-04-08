@@ -1,14 +1,5 @@
 import deepmerge from 'deepmerge';
-//import 'babel-polyfill';
-//import Promise from 'promise-polyfill';
-import 'es6-promise';
 import 'whatwg-fetch';
-
-
-// To add to window
-if (!window.Promise) {
-  window.Promise = Promise;
-}
 
 if (!Array.prototype.includes) {
   Array.prototype.includes = function(searchElement /*, fromIndex*/ ) {
