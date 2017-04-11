@@ -39,7 +39,7 @@ class Box extends React.Component {
   }
   render() {
     return <div>
-      <BoxHeader></BoxHeader>
+      <BoxHeader settings={this.props.settings}></BoxHeader>
       <BoxList data={this.props.directory} items={this.setItemList()}
         onDrop={this.props.onDrop}
         onDragEnter={this.props.onDragEnter}

@@ -150,7 +150,6 @@ class UploadBox extends React.Component {
       : null;
     return (
       <div className="upb_container">
-        {alertDrop}
         <Menu directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items}
           settings={this.props.options.config}

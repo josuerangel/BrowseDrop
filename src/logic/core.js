@@ -32,11 +32,11 @@ if (!Array.prototype.includes) {
 
 let defaultSettings = {
   caption: {
-    maxSize: "El archivo es muy grande",
-    extensions: "extenion no valida",
-    extensionsBlock: "extension no valida",
-    allowDuplicates: "Ya existe ese name",
-    dragzone: "pon tus files aqui!"
+    maxSize: "file is too large! Please choose another file.",
+    extensions: "invalid extension",
+    extensionsBlock: "invalid extension",
+    allowDuplicates: "File with the same name is already exist.",
+    dragzone: "Drop the files here to Upload"
   }
 };
 
