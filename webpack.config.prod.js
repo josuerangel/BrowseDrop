@@ -2,6 +2,7 @@ const path = require('path');
 var webpack = require('webpack');
 var CompressionPlugin = require('compression-webpack-plugin');
 
+
 module.exports = {
   entry: {
     app: [__dirname + '/src'],
@@ -15,9 +16,7 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/bundles/'
   },
-  //devtool: "cheap-module-source-map",
-  devtool: "source-map",
-  //devtool: "cheap-module-eval-source-map",
+  devtool: "cheap-module-source-map",
   module: {
     loaders: [
       {
@@ -54,6 +53,29 @@ module.exports = {
       ]
   },
   plugins: [
+    // new webpack.LoaderOptionsPlugin({
+    //   minimize: true,
+    //   debug: false
+    // }),
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      beatify:false,
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      compress:{
+        //screw_ie8: true,
+        warnings: false
+      },
+      comments: false
+   }),
+   new webpack.optimize.DedupePlugin(),
+   new webpack.optimize.AggressiveMergingPlugin()
   ],
   resolve: {
     alias: {

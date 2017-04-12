@@ -8,59 +8,72 @@ import IconFile from '../icon-file/icon-file.js'
 
 class NotificationItem extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.timeout = null;
     this.state = {
       type: this.props.type,
       animate: 'bounceIn'
     }
+    this.handleDismiss = this.handleDismiss.bind(this);
     if (this.props.dissmiss !== 0) {
-      this.handleDismiss(this.props.onDelete).bind(this);
+      this.handleDismiss(this.props.onDelete);
     }
   }
-  componentDidMount() {
-    console.log('componentDidMount: before wait...');
-    setTimeout(function() {
-      console.log('componentDidMount wait .... ');
-    }, 2000);
-    // if(this.props.dissmiss !== 0)
-    //   this.handleDismiss(this.props.onDelete);
+  componentWillUnmount() {
+    if (process.env.NODE_ENV !== 'production')
+      console.log('componentWillUnmount clearTimeout: ', this.timeout);
+    clearTimeout(this.timeout);
   }
   componentWillUpdate(nextProps, nextState) {
-    console.log('componentWillUpdate: ', nextProps, nextState);
-  }
+    if (process.env.NODE_ENV !== 'production')
+      console.log('componentWillUpdate: ', nextProps, nextState);
+    }
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate: ", prevProps, prevState);
+    if (process.env.NODE_ENV !== 'production')
+      console.log("componentDidUpdate: ", prevProps, prevState);
     if (this.props.dissmiss !== 0)
       this.handleDismiss(this.props.onDelete);
     }
   handleDismiss(callback) {
+    if (this._calledComponentWillUnmount)
+      return;
     let time = this.props.dissmiss * 1000;
-    console.log('handleDismiss: ', this.props, time);
+    if (process.env.NODE_ENV !== 'production')
+      console.log('handleDismiss: ', this.props, time);
 
     let props = this.props;
     let self = this;
-    console.log('handleDismiss self: ', self);
-    setTimeout(function() {
-      console.log('inside timer');
-      self.setState({animate: 'bounceOut'});
+    if (process.env.NODE_ENV !== 'production')
+      console.log('handleDismiss self: ', self);
+    this.timeout = setTimeout(function() {
+      if (process.env.NODE_ENV !== 'production')
+        console.log('inside timer self,', self);
+      if (self.refs.myNotification)
+        self.setState({animate: 'bounceOut'});
       setTimeout(function() {
+        if (process.env.NODE_ENV !== 'production')
+          console.log('handleDismiss launch callback props: ', props);
         callback(props);
       }, 2000);
     }, time);
   }
-  setSpinner(){
+  setSpinner() {
     if (this.props.type === "info")
       return <div className="containerSpinner pull-left">
-			 		<div className="spinner"><div className="rect1"></div>
-			 		<div className="rect2"></div><div className="rect3"></div>
-		 				<div className="rect4"></div><div className="rect5"></div></div>
-			 		</div>
+        <div className="spinner">
+          <div className="rect1"></div>
+          <div className="rect2"></div>
+          <div className="rect3"></div>
+          <div className="rect4"></div>
+          <div className="rect5"></div>
+        </div>
+      </div>
   }
   render() {
-    return <ListGroupItem className={' animated ' + this.state.animate} bsStyle={this.props.type}>
+    return <ListGroupItem ref="myNotification" className={' animated ' + this.state.animate} bsStyle={this.props.type}>
       <div className={"upb__notifications__dataFile"}>
         <div className={"upb__notifications__dataFile__icon"}>
-        <IconFile name={this.props.dataFile.name}></IconFile>
+          <IconFile name={this.props.dataFile.name}></IconFile>
         </div>
         <div className="upb__notifications__dataFile__data">
           <div className={"upb__notifications__dataFile__data__name"}>
@@ -72,10 +85,10 @@ class NotificationItem extends React.Component {
         </div>
       </div>
       <div className={"upb__notifications__action"}>
-      <div className={"upb__notifications__action__message"}>{this.props.message}</div>
-      <div className={"upb__notifications__action__spinner"}>
-        {this.setSpinner()}
-      </div>
+        <div className={"upb__notifications__action__message"}>{this.props.message}</div>
+        <div className={"upb__notifications__action__spinner"}>
+          {this.setSpinner()}
+        </div>
       </div>
     </ListGroupItem>
   }

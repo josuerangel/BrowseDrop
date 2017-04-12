@@ -6,7 +6,8 @@
   "author": "Marcos Josue Rangel Aguilar",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --inline --port 3000"
+    "start": "webpack-dev-server --inline --port 3000",
+    "build": "webpack --env=prod --progress --profile --colors --config=webpack.config.prod.js"
   },
   "dependencies": {
     "animate.css": "^3.5.2",

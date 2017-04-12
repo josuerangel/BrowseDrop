@@ -41,7 +41,7 @@ class UploadBox extends React.Component {
   constructor(props) {
     super(props);
     this.arrDataOrinal = this.props.options.Data;
-    this.notificationCounter = 0;
+    this.notificationCounter = -1;
     this.arrDirectorys = this.arrDataOrinal.filter((item) => (item.type === "directory"));
     let directory = this.arrDirectorys.filter((item) => (item.id === 0))[0];
     this.directoryHome = directory;
@@ -54,7 +54,10 @@ class UploadBox extends React.Component {
     };
   }
   addNotification(options, file) {
-    const notificationId = this.notificationCounter++;
+    console.log('addNotification options: ', options);
+    console.log('addNotification file: ', file);
+    this.notificationCounter++;
+    const notificationId = this.notificationCounter;
     let _notification = {
       id: this.notificationCounter,
       type: options.type,
@@ -71,6 +74,7 @@ class UploadBox extends React.Component {
     let arrNotifications = this.state.notifications;
     arrNotifications.push(_notification);
     this.setState({notifications: arrNotifications});
+    console.log('addNotification end for file: ', file);
     return notificationId
   }
   deleteNotification(notification) {
@@ -78,6 +82,7 @@ class UploadBox extends React.Component {
     this.setState({notifications: arrNotifications});
   }
   callbackCore(data) {
+    console.log('callbackCore data: ', data);
     let arrNotifications = this.state.notifications.map((notification) => {
       if (notification.id === data.idNotification || notification.id === data.notificationId) {
         notification.type = data.status;
@@ -92,9 +97,11 @@ class UploadBox extends React.Component {
       newItems.push(data.item);
       this.setState({items: newItems});
     }
+    console.log('callbackCore notifications modified: ', arrNotifications);
     this.setState({notifications: arrNotifications});
   }
   handleDrop(fileList, directory) {
+    console.log('handleDrop fileList: ', fileList);
     const self = this;
     const messageValidate = (this.props.options.config.caption.labelValidate === undefined)
       ? 'Validating'
@@ -102,14 +109,17 @@ class UploadBox extends React.Component {
     let settings = this.props.options.config;
 
     this.setState({directoryHover: null});
-    this.addNotification({
-      type: 'info',
-      message: messageValidate
-    }, fileList[0]);
-    settings.directoryHome = this.directoryHome;
-    setTimeout(function() {
-      CoreSingleFile(directory, fileList[0], settings, self.state.items, self.notificationCounter, self.callbackCore.bind(self));
-    }, 1000);
+    for(let x = 0, len = fileList.length; x < len; x++){
+      const notificationId = this.addNotification({
+        type: 'info',
+        message: messageValidate
+      }, fileList[x]);
+      settings.directoryHome = this.directoryHome;
+      setTimeout(function() {
+        console.log('before send CoreSingleFile notificationCounter: ', notificationId);
+        CoreSingleFile(directory, fileList[0], settings, self.state.items, notificationId, self.callbackCore.bind(self));
+      }, 1000);
+    }
   }
   handleClickDirectory(directory) {
     this.setState({directory: directory});
@@ -137,7 +147,7 @@ class UploadBox extends React.Component {
     }, file);
 
     setTimeout(function() {
-      CoreDeleteFile(file, self.directoryHome, self.props.options.config, self.notificationCounter, self.callbackDeleteFile.bind(self));
+      CoreDeleteFile(file, self.directoryHome, self.props.options.config, notificationId, self.callbackDeleteFile.bind(self));
     }, 1000);
   }
   callbackDeleteFile(data) {
@@ -174,12 +184,12 @@ class UploadBox extends React.Component {
       : this.props.options.config.caption.labelValidate;
     let settings = this.props.options.config;
     settings.directoryHome = this.directoryHome;
-    this.addNotification({
+    const notificationId = this.addNotification({
       type: 'info',
       message: messageValidate
     }, this.refs.fileUpload.files[0]);
     setTimeout(function() {
-      CoreSingleFile(self.state.directory, self.refs.fileUpload.files[0], settings, self.state.items, self.notificationCounter, self.callbackCore.bind(self));
+      CoreSingleFile(self.state.directory, self.refs.fileUpload.files[0], settings, self.state.items, notificationId, self.callbackCore.bind(self));
     }, 1000);
   }
   render() {

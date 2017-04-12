@@ -20,7 +20,6 @@ class File extends React.Component {
     if (this.props.caption !== undefined) {
       this.caption = deepmerge.all([{}, defaultCaption, this.props.caption]);
     }
-    console.log(this.caption);
     this.state = {
       isOver: false,
       showModal: false
@@ -52,15 +51,12 @@ class File extends React.Component {
   }
   handleClickTrash(e){
     e.preventDefault();
-    console.log('handleClickTrash: ', e);
     this.setState({ showModal:true });
   }
   closeModal(){
     this.setState({ showModal: false });
   }
   sendDeleteFile(e){
-    console.log(e);
-    console.log(this.props);
     this.props.onDeleteFile(this.props.data);
     this.setState({ showModal: false });
   }
