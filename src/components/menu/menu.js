@@ -2,6 +2,8 @@ import React from 'react';
 import './menu.styl';
 import TiHomeOutline from 'react-icons/lib/ti/home-outline'
 import TiChevronRightOutline from 'react-icons/lib/ti/chevron-right-outline'
+import Button from 'react-bootstrap/lib/Button'
+import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 
 class MenuItem extends React.Component {
   handleClick(event){
@@ -63,7 +65,18 @@ class Menu extends React.Component {
     return arrDirectorys.reverse();
   }
   render(){
-    return <div className="upb__menuBox">{this.setDirectorys()}</div>
+    const labelUploadFile = (this.props.settings.caption.labelUploadFile === undefined)
+      ? 'Upload file'
+      : this.props.settings.caption.labelUploadFile;
+    return <div className="upb__menuBox">
+      <div>{this.setDirectorys()}</div>
+      <div className={"upb__menu__button"}>
+        <Button bsStyle="primary" onClick={this.props.onClickUpload}>
+          <Glyphicon glyph="upload" />
+          <span className={"upb__menu__button__label"}>{labelUploadFile}</span>
+        </Button>
+      </div>
+      </div>
   }
 }
 

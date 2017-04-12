@@ -186,9 +186,10 @@ function CoreSingleFile(directory, file, settings, itemsBox, notificationId, cal
   let message = applyValidation(file, settingsSingle, itemsBox);
   console.log('CoreSingleFile applyValidation: ', message);
   if (message === undefined){
+    const messageSend = (settings.caption.labelSend === undefined) ? 'Sending' : settings.caption.labelSend;
     const dataResponse = {
       status: 'info',
-      message: "Enviando",
+      message: messageSend,
       idNotification: notificationId,
       item: {}
     };

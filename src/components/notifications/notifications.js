@@ -4,7 +4,7 @@ import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
 import Alert from 'react-bootstrap/lib/Alert'
 import './notifications.styl'
-import FaFolderOpen from 'react-icons/lib/fa/folder-open'
+import IconFile from '../icon-file/icon-file.js'
 
 class NotificationItem extends React.Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class NotificationItem extends React.Component {
     return <ListGroupItem className={' animated ' + this.state.animate} bsStyle={this.props.type}>
       <div className={"upb__notifications__dataFile"}>
         <div className={"upb__notifications__dataFile__icon"}>
-        <FaFolderOpen className={"upb__notifications__dataFile__icon_icon"}/>
+        <IconFile name={this.props.dataFile.name}></IconFile>
         </div>
         <div className="upb__notifications__dataFile__data">
           <div className={"upb__notifications__dataFile__data__name"}>

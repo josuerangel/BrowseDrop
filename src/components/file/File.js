@@ -2,26 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './file.styl'
 import deepmerge from 'deepmerge'
-import FaFileO from 'react-icons/lib/fa/file-o'
-import FaFolderOpen from 'react-icons/lib/fa/folder-open'
-import FaTrashO from 'react-icons/lib/fa/trash-o'
-import FaFileImageO from 'react-icons/lib/fa/file-image-o'
-import FaFileArchiveO from 'react-icons/lib/fa/file-archive-o'
-//import FaFileO from 'react-icons/lib/fa/file-o'
-import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
+import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import Row from 'react-bootstrap/lib/Row'
-//import mimedb from 'mime-db'
-//var mime = require('mime-types')
-import mime from 'mime-types'
+import IconFile from '../icon-file/icon-file.js'
 
 class File extends React.Component {
   caption : {}
-  //arrExtensions : []
   constructor(props){
     super(props);
-    //arrExtensions = [];
     let defaultCaption = {
       deleteFileTitle: "Delete file",
       deleteFileBody: "Are you sure you want to remove this file?",
@@ -36,41 +25,6 @@ class File extends React.Component {
       isOver: false,
       showModal: false
     }
-  }
-  setIcon(item){
-    console.log('setIcon: ', item);
-    console.log(mime.lookup(item.name));
-    return (item.type === "directory")
-      ? <FaFolderOpen className="upb__itembox__icon" />
-    : this.setIconFile(item.name);
-    //: <FaFileO className="upb__itembox__icon"/>;
-  }
-  setIconFile(name){
-    const arrType = mime.lookup(name).split("/");
-    console.log(arrType);
-    let result = null;
-    switch (arrType[0]) {
-      case 'image':
-        result = <FaFileImageO className="upb__itembox__icon"></FaFileImageO>;
-        break;
-      case 'application':
-        result = this.setIconFileApplication(arrType[1]);
-        break;
-      default:
-        result = <FaFileO className="upb__itembox__icon"/>;
-    }
-    return result;
-  }
-  setIconFileApplication(application){
-    let result = null;
-      switch (application) {
-        case 'x-rar-compressed':
-          result = <FaFileArchiveO className="upb__itembox__icon"></FaFileArchiveO>;
-          break;
-        default:
-            result = <FaFileO className="upb__itembox__icon"/>;
-      }
-      return result;
   }
   onClick(event){
     if (this.props.data.type === "directory")
@@ -108,9 +62,7 @@ class File extends React.Component {
     console.log(e);
     console.log(this.props);
     this.props.onDeleteFile(this.props.data);
-    // CoreDeleteFile(this.props.data, this.props.directoryHome, this.props.settings, function(data){
-    //   console.log('termina delete', data);
-    // });
+    this.setState({ showModal: false });
   }
   render () {
     let modalInstance = null;
@@ -140,7 +92,7 @@ class File extends React.Component {
       onMouseEnter={this.handleMouseEnter.bind(this)}
       onMouseLeave={this.handleMouseLeave.bind(this)}>
       <div className="upb__itembox__iconName">
-        {this.setIcon(this.props.data)}
+        <IconFile name={this.props.data.name} type={this.props.data.type} color={'#48A0DC'}></IconFile>
         <a className="upb__itembox__name" href={this.props.data.url}
           onClick={this.onClick.bind(this)}>{this.props.data.name}</a>
       </div>

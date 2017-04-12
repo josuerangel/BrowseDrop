@@ -14,8 +14,8 @@ function parseJSON(response) {
   return response.json();
 }
 
-function CoreDeleteFile(file, home, settings, callback){
-  console.log('CoreDeleteFile: ', file, home, settings);
+function CoreDeleteFile(file, home, settings, notificationId, callback){
+  console.log('CoreDeleteFile: ', file, home, settings, notificationId);
   let dataToSend = {};
   // let formData = new FormData();
   // for (let attr in this.props.data)
@@ -42,7 +42,8 @@ function CoreDeleteFile(file, home, settings, callback){
     message = {
       status: (data.status !== undefined) ? data.status : "error",
       message: (data.message !== undefined) ? data.message : "",
-      item: (data.item !== undefined) ? data.item : {}
+      item: (data.item !== undefined) ? data.item : {},
+      notificationId: notificationId
     };
     console.log('deleteFile success message: ', message);
 
@@ -50,14 +51,15 @@ function CoreDeleteFile(file, home, settings, callback){
        message = settings.onSuccessDeleteFile(data, file);
        console.log('deleteFile success message after urser function: ', message);
     }
-
+    message.notificationId = notificationId;
     callback(message);
   }).catch(function(error) {
     console.log('deleteFile error: ', error);
     const message = {
       status: "danger",
       message: error.response.status + " - " + error.message + ' -- ' + error.response.url,
-      item: {}
+      item: {},
+      notificationId: notificationId
     };
     console.log('deleteFile error message: ', message);
     callback(message);
