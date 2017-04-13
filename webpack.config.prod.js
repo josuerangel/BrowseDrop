@@ -64,6 +64,7 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       beatify:false,
+      comments: false,
       mangle: {
         screw_ie8: true,
         keep_fnames: true
@@ -71,8 +72,8 @@ module.exports = {
       compress:{
         //screw_ie8: true,
         warnings: false
-      },
-      comments: false
+        //drop_console: true
+      }
    }),
    new webpack.optimize.DedupePlugin(),
    new webpack.optimize.AggressiveMergingPlugin()

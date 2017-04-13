@@ -33,6 +33,28 @@ if (!Array.prototype.find) {
   };
 }
 
+if (!Array.prototype.findIndex) {
+  Array.prototype.findIndex = function(predicate) {
+    if (this === null) {
+      throw new TypeError('Array.prototype.findIndex called on null or undefined');
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('predicate must be a function');
+    }
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
+
+    for (var i = 0; i < length; i++) {
+      value = list[i];
+      if (predicate.call(thisArg, value, i, list)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+}
 class UploadBox extends React.Component {
   arrDataOrinal : []
   arrDirectorys : []
@@ -82,7 +104,6 @@ class UploadBox extends React.Component {
     this.setState({notifications: arrNotifications});
   }
   callbackCore(data) {
-    console.log('callbackCore data: ', data);
     let arrNotifications = this.state.notifications.map((notification) => {
       if (notification.id === data.idNotification || notification.id === data.notificationId) {
         notification.type = data.status;
@@ -128,10 +149,11 @@ class UploadBox extends React.Component {
     this.setState({directory: directory})
   }
   handleDragEnter(directory) {
-    this.setState({directoryHover: directory});
+    //this.setState({directoryHover: directory});
   }
   handleHover(directory) {
-    this.setState({directoryHover: directory});
+    if (directory !== this.state.directoryHover)
+      this.setState({directoryHover: directory});
   }
   handleDragLeave(directory) {
     this.setState({directoryHover: null});
@@ -151,6 +173,7 @@ class UploadBox extends React.Component {
     }, 1000);
   }
   callbackDeleteFile(data) {
+    console.log('UploadBox callbackDeleteFile: ', data);
     let arrNotifications = this.state.notifications.map((notification) => {
       if (notification.id === data.idNotification || notification.id === data.notificationId) {
         notification.type = data.status;
@@ -160,16 +183,21 @@ class UploadBox extends React.Component {
       return notification;
     });
     this.setState({notifications: arrNotifications});
+    console.log('UploadBox callbackDeleteFile data status: ', data.status);
     if (data.status === 'success') {
+      console.log('UploadBox callbackDeleteFile entro ok');
       let arrItems = this.state.items;
       const indexElement = arrItems.findIndex(function(item) {
         return data.item.id === item.id
       });
+      console.log('UploadBox callbackDeleteFile indexElement: ', indexElement);
       arrItems[indexElement].animationIn = "bounceOut";
       this.setState({items: arrItems});
-      self = this;
+      let self = this;
       setTimeout(function() {
+        console.log('UploadBox callbackDeleteFile before delete count: ', arrItems.length);
         arrItems.splice(indexElement, 1);
+        console.log('UploadBox callbackDeleteFile after delete count: ', arrItems.length);
         self.setState({items: arrItems});
       }, 1000);
     }
@@ -200,8 +228,8 @@ class UploadBox extends React.Component {
       : null;
     return (
       <div className="upb_container">
-        {alertDrop}
         <input type="file" id="file" ref="fileUpload" onChange={this.handleSelectFile.bind(this)} style={{display:"none"}}></input>
+        {alertDrop}
         <Menu settings={this.props.options.config} directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)} onClickUpload={this.handleClickUpload.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} settings={this.props.options.config} caption={this.props.options.config.caption} directoryHome={this.directoryHome} onClickDirectory={this.handleClickDirectory.bind(this)} onDeleteFile={this.handleDeleteFile.bind(this)} onDrop={this.handleDrop.bind(this)} onDragEnter={this.handleDragEnter.bind(this)} onDragOver={this.handleHover.bind(this)} onDragLeave={this.handleDragLeave.bind(this)}></Box>
         <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>

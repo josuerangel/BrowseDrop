@@ -55,6 +55,7 @@ function CoreDeleteFile(file, home, settings, notificationId, callback){
     callback(message);
   }).catch(function(error) {
     console.log('deleteFile error: ', error);
+    if (error.response === undefined) return;
     const message = {
       status: "danger",
       message: error.response.status + " - " + error.message + ' -- ' + error.response.url,
