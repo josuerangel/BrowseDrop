@@ -32,11 +32,12 @@ if (!Array.prototype.includes) {
 
 let defaultSettings = {
   caption: {
-    maxSize: "file is too large! Please choose another file.",
-    extensions: "invalid extension",
-    extensionsBlock: "invalid extension",
-    allowDuplicates: "File with the same name is already exist.",
-    dragzone: "Drop the files here to Upload"
+    errors: {
+      maxSize: "File is too large!, Please choose another file.",
+      extensions: "Invalid extension",
+      extensionsBlock: "Invalid extension",
+      allowDuplicates: "File with the same name is already exist."
+    }
   }
 };
 
@@ -46,7 +47,7 @@ function allowDuplicates(itemsBox, file, allow) {
   /*for (let item of itemsBox)
     if (item.name === file.name) return true;*/
   for (let x = 0, len = itemsBox.length; x < len; x++)
-      if (itemsBox[x].name === file.name) return true;
+    if (itemsBox[x].name === file.name) return true;
   return false;
 }
 
@@ -163,10 +164,10 @@ function sendFile(directory, settings, file, notificationId, callback) {
  * Apply validations, and return message
  */
 function applyValidation(file, settings, itemsBox) {
-  if (!extensions(file, settings.extensions)) return settings.caption.extensions;
-  if (!maxSize(file, 40)) return settings.caption.maxSize;
-  if (extensionsBlock(file, settings.extensionsBlock)) return settings.caption.extensionsBlock;
-  if (allowDuplicates(itemsBox, file, settings.allowDuplicates)) return settings.caption.allowDuplicates;
+  if (!extensions(file, settings.extensions)) return settings.caption.errors.extensions;
+  if (!maxSize(file, 40)) return settings.caption.errors.maxSize;
+  if (extensionsBlock(file, settings.extensionsBlock)) return settings.caption.errors.extensionsBlock;
+  if (allowDuplicates(itemsBox, file, settings.allowDuplicates)) return settings.caption.errors.allowDuplicates;
   console.log('applyValidation finish');
 }
 
