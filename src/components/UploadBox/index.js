@@ -193,11 +193,14 @@ class UploadBox extends React.Component {
     }, 1000);
   }
   render() {
+    const messageDrop = (this.props.options.config.caption.labelDropInTo === undefined)
+      ? "Drop into " : this.props.options.config.caption.labelDropInTo;
     const alertDrop = (this.state.directoryHover !== null)
-      ? <Alert bsStyle="success" className={"upb__alert__drop"}>{"droped into " + this.state.directoryHover.name}</Alert>
+      ? <Alert bsStyle="success" className={"upb__alert__drop"}>{messageDrop + this.state.directoryHover.name}</Alert>
       : null;
     return (
       <div className="upb_container">
+        {alertDrop}
         <input type="file" id="file" ref="fileUpload" onChange={this.handleSelectFile.bind(this)} style={{display:"none"}}></input>
         <Menu settings={this.props.options.config} directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)} onClickUpload={this.handleClickUpload.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} settings={this.props.options.config} caption={this.props.options.config.caption} directoryHome={this.directoryHome} onClickDirectory={this.handleClickDirectory.bind(this)} onDeleteFile={this.handleDeleteFile.bind(this)} onDrop={this.handleDrop.bind(this)} onDragEnter={this.handleDragEnter.bind(this)} onDragOver={this.handleHover.bind(this)} onDragLeave={this.handleDragLeave.bind(this)}></Box>

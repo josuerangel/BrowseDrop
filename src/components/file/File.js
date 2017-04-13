@@ -78,7 +78,8 @@ class File extends React.Component {
         </Modal>
     );
     }
-    const buttonTrash = (this.props.data.type !== "directory") ?
+    //console.log('buttonDelete: ', this.props.data.buttonDelete);
+    const buttonTrash = (this.props.data.type !== "directory" && this.props.data.buttonDelete !== false) ?
       (<div className={"upb__itembox__btnDelete__container " + this.setHiddenButtonDelete()}
         onClick={this.handleClickTrash.bind(this) }>
           <Glyphicon glyph="trash" className={"upb__itembox__btnDelete"} />

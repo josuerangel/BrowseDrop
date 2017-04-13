@@ -25,19 +25,14 @@ MenuItem.defaultProps = {
 class Menu extends React.Component {
   constructor(props){
     super(props);
+    this.directoryHome = this.props.directorys.find((directory) => directory.id === 0)
   }
-  componentDidMount(){
-    if(this.props.directorys !== undefined)
-      this.directoryHome = this.props.directorys.find((directory) => directory.id === 0)
-  }
+  // componentDidMount(){
+  //   if(this.props.directorys !== undefined)
+  //     this.directoryHome = this.props.directorys.find((directory) => directory.id === 0)
+  // }
   handleClick(event){
-    let home = {
-      "id":0,
-      "parentId":0,
-      "name":"Home",
-      "drag":true
-    };
-    this.props.onClick(home);
+    this.props.onClick(this.directoryHome);
   }
   setDirectorys(){
     let arrDirectorys = [];
@@ -51,15 +46,8 @@ class Menu extends React.Component {
       arrDirectorys.push(<TiChevronRightOutline key={index.toString()} />)
       index++;
     }
-
-    let home = {
-      "id":0,
-      "parentId":0,
-      "name":"Home",
-      "drag":true
-    };
     arrDirectorys.push((this.props.iconHome == false)
-      ? <MenuItem key={index.toString()} data={home} onClick={this.props.onClick}></MenuItem>
+      ? <MenuItem key={index.toString()} data={this.directoryHome} onClick={this.props.onClick}></MenuItem>
       : <TiHomeOutline key={index.toString()} onClick={this.handleClick.bind(this)}
        className="upb__itemHome" />);
     return arrDirectorys.reverse();
@@ -68,13 +56,16 @@ class Menu extends React.Component {
     const labelUploadFile = (this.props.settings.caption.labelUploadFile === undefined)
       ? 'Upload file'
       : this.props.settings.caption.labelUploadFile;
+    const buttonUpload = (this.props.settings.buttonUpload === false)
+      ? null
+      : (<Button bsStyle="primary" onClick={this.props.onClickUpload}>
+        <Glyphicon glyph="upload" />
+        <span className={"upb__menu__button__label"}>{labelUploadFile}</span>
+      </Button>);
     return <div className="upb__menuBox">
       <div>{this.setDirectorys()}</div>
       <div className={"upb__menu__button"}>
-        <Button bsStyle="primary" onClick={this.props.onClickUpload}>
-          <Glyphicon glyph="upload" />
-          <span className={"upb__menu__button__label"}>{labelUploadFile}</span>
-        </Button>
+        {buttonUpload}
       </div>
       </div>
   }
