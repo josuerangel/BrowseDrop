@@ -69,6 +69,14 @@ class NotificationItem extends React.Component {
         </div>
       </div>
   }
+  formatBytes(bytes,decimals) {
+     if(bytes == 0) return '0 Bytes';
+     var k = 1000,
+         dm = decimals + 1 || 3,
+         sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+         i = Math.floor(Math.log(bytes) / Math.log(k));
+     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
   render() {
     return <ListGroupItem ref="myNotification" className={' animated ' + this.state.animate} bsStyle={this.props.type}>
       <div className={"upb__notifications__dataFile"}>
@@ -80,7 +88,7 @@ class NotificationItem extends React.Component {
             {this.props.dataFile.name}
           </div>
           <div className={"upb__notifications__dataFile__data__size"}>
-            {this.props.dataFile.size}
+            {this.formatBytes(this.props.dataFile.size)}
           </div>
         </div>
       </div>
