@@ -99,6 +99,101 @@ options : {
         allowDuplicates: "File with the same name is already exist."    
       }
     }
-  }
+  },
+
+  // Array for files and directories
+  // if necessary define item with ID = 0, it's root
+  data: [
+
+    //Detail for root directory
+    {
+      // ID only root have 0
+   		id: 0,
+
+      // name for file or directory
+      // name displayed in menu when iconHome is false
+   		name: "home",
+
+      // allow drag in this directory
+   		drag: true,
+
+      // need specific type
+   		type: "directory",
+
+      // url for upload file
+      // react-uploadbox use this url for all directories dosen't have url
+   		url: "../RelativeUrlForUpload",
+
+      // url for delete file
+      // react-uploadbox use this url for all files dosen't have url    
+   		urlDelete: "../RelativeUrlForDelete",
+
+      // Extra data for send
+      // react-uploadbox use this extra data for all directories and mixed with the specific directory
+   		extraDataRequest: {
+     		"param1": "00000000"
+   		}
+ 	  },
+
+
+    // Detail for directory
+    {
+      // id unique
+   		id: 999,
+
+      // The id of the parent folder. Omitted for the root node.
+      parentId: 0
+
+      // name for file or directory
+   		name: "Directory 1",
+
+      // allow drag in this directory
+   		drag: true,
+
+      // need specific type
+   		type: "directory",
+
+      // url for upload file
+   		url: "../RelativeUrlForUpload",
+
+      // url for delete file
+   		urlDelete: "../RelativeUrlForDelete",
+
+      // Extra data for send
+   		extraDataRequest: {
+     		"param2": "ok"
+   		}
+ 	  },
+
+    // Detail for file
+    {
+      // id unique
+   		id: 999,
+
+      // The id of the parent folder. Omitted for the root node.
+      parentId: 0
+
+      // name for file or directory
+   		name: "file.txt",
+
+      // need specific type
+      // if null or undefined react-uploadbox take it like a file
+   		type: "file",
+
+      // url for download or open file
+   		url: "../RelativeUrlForUpload",
+
+      // Show or hide button for delete
+      buttonDelete: false,
+
+      // url for delete file
+   		urlDelete: "../RelativeUrlForDelete",
+
+      // Extra data for send in delete
+   		extraDataRequest: {
+     		"param2": "ok"
+   		}
+ 	  }    
+  ]
 }
 ```
