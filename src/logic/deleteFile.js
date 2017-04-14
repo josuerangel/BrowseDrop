@@ -27,7 +27,12 @@ function CoreDeleteFile(file, home, settings, notificationId, callback){
   }
   else dataToSend = file;
 
-  let urlToSend = home.urlDelete + '?vUPB=1';
+  let urlToSend = home.urlDelete + '?vUPB=0.1.0';
+
+  console.log('settings onlyBeforeSendDeletFile: ', settings.onlyDataBeforeSendDeleteFile);
+  if (settings.onlyDataBeforeSendDeleteFile !== true)
+    for (let attr in file) urlToSend += '&' + attr + '=' + file[attr];
+
   for (let attr in dataToSend)
     urlToSend += '&' + attr + '=' + dataToSend[attr];
 

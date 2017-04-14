@@ -48,6 +48,11 @@ options : {
       return ObjectSuccessForReactUploadBox;
     },
 
+    // Flag for define which data send, when is true only send data returned in method beforeSendDeleteFile
+    // Caution if true and beforeSendDeleteFile is undefined don't send params in the request
+    onlyDataBeforeSendDeleteFile: false,
+
+
     // Callback fired before deleting file
     // here you can add extra data or transform it before to delete
     // data = info for item file
@@ -192,10 +197,9 @@ options : {
       // url for delete file
    		urlDelete: "../RelativeUrlForDelete",
 
-      // Extra data for send in delete
-   		extraDataRequest: {
-     		"param2": "ok"
-   		}
+      // following params are extra data to send
+   		extraParameter1: 'ok'
+      extraParameter2: 'ready'
  	  }    
   ]
 }

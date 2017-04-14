@@ -87,7 +87,7 @@ class UploadBox extends React.Component {
     if (file !== undefined) {
       _notification.file = {
         name: file.name,
-        lastModified: file.lastModified,
+        date: file.date,
         size: file.size,
         type: file.type
       }

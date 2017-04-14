@@ -78,6 +78,12 @@ class NotificationItem extends React.Component {
      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
   render() {
+    const sizeFile = (this.props.dataFile.size === undefined)
+      ? null
+      : (<div className={"upb__notifications__dataFile__data__size"}>
+        {this.formatBytes(this.props.dataFile.size)}
+      </div>)
+
     return <ListGroupItem ref="myNotification" className={' animated ' + this.state.animate} bsStyle={this.props.type}>
       <div className={"upb__notifications__dataFile"}>
         <div className={"upb__notifications__dataFile__icon"}>
@@ -87,9 +93,7 @@ class NotificationItem extends React.Component {
           <div className={"upb__notifications__dataFile__data__name"}>
             {this.props.dataFile.name}
           </div>
-          <div className={"upb__notifications__dataFile__data__size"}>
-            {this.formatBytes(this.props.dataFile.size)}
-          </div>
+          {sizeFile}
         </div>
       </div>
       <div className={"upb__notifications__action"}>
