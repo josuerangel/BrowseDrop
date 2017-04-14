@@ -1,6 +1,5 @@
 import React from 'react'
 import {ReactDOM} from 'react-dom'
-import 'babel-polyfill'
 import Menu from '../menu/menu'
 import Box from '../box/box'
 import './uploadbox.styl'

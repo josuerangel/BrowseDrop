@@ -1,6 +1,4 @@
 import React from 'react'
-import File from './file/File'
-import Directory from './Directory'
 import UploadBox from './UploadBox'
 
 class Component extends React.Component {
