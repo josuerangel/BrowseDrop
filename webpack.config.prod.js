@@ -8,13 +8,14 @@ module.exports = {
     app: [__dirname + '/src'],
     components: [__dirname + '/src/components/Component.js'],
     uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js'],
-    uploadBoxStandAlone : [__dirname + '/src/components/UploadBox/index.js'],
+    uploadBoxStandAlone : ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/UploadBox/index.js'],
     uploadBox2: ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/wrapper3.js']
   },
   output: {
     path: './bundles',
     filename: '[name].js',
-    publicPath: '/bundles/'
+    publicPath: '/bundles/',
+    library: 'BrowseDrop'
   },
   devtool: "cheap-module-source-map",
   module: {
