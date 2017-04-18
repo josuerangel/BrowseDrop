@@ -10,7 +10,7 @@ module.exports = {
     components: [__dirname + '/src/components/Component.js'],
     uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js'],
     uploadBoxStandAlone : ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/UploadBox/index.js'],
-    uploadBox2: ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/wrapper3.js']
+    "browse-drop-wrapper-min": ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/wrapper3.js']
   },
   output: {
     path: './bundles',
@@ -73,9 +73,9 @@ module.exports = {
         keep_fnames: true
       },
       compress:{
-        //screw_ie8: true,
-        warnings: false
-        //drop_console: true
+        screw_ie8: true,
+        warnings: false,
+        drop_console: true
       }
    }),
    new webpack.optimize.DedupePlugin(),
@@ -86,10 +86,9 @@ module.exports = {
       'react': path.join(__dirname, 'node_modules', 'react')
     },
     extensions: ['', '.js', '.jsx', '.styl']
+  },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
-  //,
-  // externals: {
-  //   'react': 'React',
-  //   'react-dom': 'ReactDOM'
-  // }
 };

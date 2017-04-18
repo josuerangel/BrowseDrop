@@ -2,9 +2,9 @@ import React from 'react'
 import 'babel-polyfill';
 import UploadBox from '../UploadBox'
 
-function renderUploadBox(options, container, callback){
-  ReactDOM.render(<UploadBox options={options} />, container);
+function renderBrowseDrop(options, container, callback){
+  ReactDOM.render(<UploadBox options={options} />, container, callback);
 }
 
-module.exports = renderUploadBox;
-window.renderUploadBox = renderUploadBox;
+module.exports = renderBrowseDrop;
+window.renderBrowseDrop = renderBrowseDrop;
