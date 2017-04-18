@@ -10,7 +10,8 @@ class ZoneDrop extends React.Component {
     }
     handleDrop(dataTransfer, event) {
       this.setState({isDragEnter: false, isDragOver: false});
-      this.props.onDrop(dataTransfer.files, this.props.data);
+      //if (this.props.data.drag === true)
+        this.props.onDrop(dataTransfer.files, this.props.data);
     }
     handleDragEnter(event){
       event.preventDefault();

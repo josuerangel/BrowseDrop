@@ -5,6 +5,7 @@ var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: {
+    BrowseDrop : ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/UploadBox/index.js'],
     app: [__dirname + '/src'],
     components: [__dirname + '/src/components/Component.js'],
     uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js'],
@@ -15,7 +16,8 @@ module.exports = {
     path: './bundles',
     filename: '[name].js',
     publicPath: '/bundles/',
-    library: 'BrowseDrop'
+    library: 'BrowseDrop',
+    libraryTarget: 'umd'
   },
   devtool: "cheap-module-source-map",
   module: {
@@ -84,9 +86,10 @@ module.exports = {
       'react': path.join(__dirname, 'node_modules', 'react')
     },
     extensions: ['', '.js', '.jsx', '.styl']
-  },
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM'
   }
+  //,
+  // externals: {
+  //   'react': 'React',
+  //   'react-dom': 'ReactDOM'
+  // }
 };

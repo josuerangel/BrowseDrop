@@ -139,7 +139,7 @@ options : {
       // Extra data for send
       // react-uploadbox use this extra data for all directories and mixed with the specific directory
    		extraDataRequest: {
-     		"param1": "00000000"
+     		param1: "ok"
    		}
  	  },
 

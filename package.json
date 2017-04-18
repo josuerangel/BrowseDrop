@@ -2,12 +2,16 @@
   "name": "uploadbox",
   "version": "1.0.0",
   "description": "uploader like dropbox",
-  "main": "index.js",
+  "main": "./bundles/BrowseDrop.js",
   "author": "Marcos Josue Rangel Aguilar",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --inline --port 3000",
     "build": "webpack --env=prod --progress --profile --colors --config=webpack.config.prod.js"
+  },
+  "peerDependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
   },
   "dependencies": {
     "animate.css": "^3.5.2",
@@ -21,8 +25,8 @@
     "json-loader": "^0.5.4",
     "mime-types": "^2.1.15",
     "react": "^15.3.2",
-    "react-bootstrap": "^0.30.8",
     "react-dom": "^15.3.2",
+    "react-bootstrap": "^0.30.8",
     "react-icons": "^2.2.3",
     "webpack": "^1.13.3",
     "whatwg-fetch": "^2.0.3"

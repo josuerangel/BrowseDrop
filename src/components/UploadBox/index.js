@@ -1,5 +1,5 @@
 import React from 'react'
-import {ReactDOM} from 'react-dom'
+//import {ReactDOM} from 'react-dom'
 import Menu from '../menu/menu'
 import Box from '../box/box'
 import './uploadbox.styl'
@@ -7,6 +7,41 @@ import {Core, CoreSingleFile} from '../../logic/core.js'
 import {CoreDeleteFile} from '../../logic/deleteFile.js'
 import Notifications from '../notifications/notifications.js'
 import Alert from 'react-bootstrap/lib/Alert'
+
+if (!Array.prototype.filter) {
+  Array.prototype.filter = function(fun/*, thisArg*/) {
+    'use strict';
+
+    if (this === void 0 || this === null) {
+      throw new TypeError();
+    }
+
+    var t = Object(this);
+    var len = t.length >>> 0;
+    if (typeof fun !== 'function') {
+      throw new TypeError();
+    }
+
+    var res = [];
+    var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+    for (var i = 0; i < len; i++) {
+      if (i in t) {
+        var val = t[i];
+
+        // NOTE: Technically this should Object.defineProperty at
+        //       the next index, as push can be affected by
+        //       properties on Object.prototype and Array.prototype.
+        //       But that method's new, and collisions should be
+        //       rare, so use the more-compatible alternative.
+        if (fun.call(thisArg, val, i, t)) {
+          res.push(val);
+        }
+      }
+    }
+
+    return res;
+  };
+}
 
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {
@@ -54,6 +89,7 @@ if (!Array.prototype.findIndex) {
     return -1;
   };
 }
+
 class UploadBox extends React.Component {
   arrDataOrinal : []
   arrDirectorys : []
@@ -121,6 +157,7 @@ class UploadBox extends React.Component {
     this.setState({notifications: arrNotifications});
   }
   handleDrop(fileList, directory) {
+    if (directory.drag === false) return;
     console.log('handleDrop fileList: ', fileList);
     const self = this;
     const messageValidate = (this.props.options.config.caption.labelValidate === undefined)
@@ -151,7 +188,7 @@ class UploadBox extends React.Component {
     //this.setState({directoryHover: directory});
   }
   handleHover(directory) {
-    if (directory !== this.state.directoryHover)
+    if (directory !== this.state.directoryHover && directory.drag === true)
       this.setState({directoryHover: directory});
   }
   handleDragLeave(directory) {

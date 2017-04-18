@@ -38,7 +38,7 @@ class IconFile extends React.Component{
         result = <FaFileMovieO className="upb__itembox__icon"></FaFileMovieO>;
         break;
       case 'text':
-        result = <FaFileTextO className="upb__itembox__icon"></FaFileTextO>
+        result = <FaFileTextO className="upb__itembox__icon upb__itembox__icon__text"></FaFileTextO>
         break;
       case 'application':
         result = this.setIconFileApplication(arrType[1]);
@@ -49,12 +49,12 @@ class IconFile extends React.Component{
     return result;
   }
   setIconFileApplication(application){
-    if (application.search('compress') !== -1) return <FaFileArchiveO className="upb__itembox__icon"></FaFileArchiveO>;
-    if (application.search('excel') !== -1) return <FaFileExcelO className="upb__itembox__icon"></FaFileExcelO>;
-    if (application.search('pdf') !== -1) return <FaFilePdfO className="upb__itembox__icon"></FaFilePdfO>;
-    if (application.search('powerpoint') !== -1) return <FaFilePowerpointO className="upb__itembox__icon"></FaFilePowerpointO>;
-    if (application.search('msword') !== -1) return <FaFileWordO className="upb__itembox__icon"></FaFileWordO>;
-    if (application.search('wordprocessingml') !== -1) return <FaFileWordO className="upb__itembox__icon"></FaFileWordO>;
+    if (application.search('compress') !== -1) return <FaFileArchiveO className="upb__itembox__icon upb__itembox__icon__compress"></FaFileArchiveO>;
+    if (application.search('excel') !== -1) return <FaFileExcelO className="upb__itembox__icon upb__itembox__icon__excel"></FaFileExcelO>;
+    if (application.search('pdf') !== -1) return <FaFilePdfO className="upb__itembox__icon upb__itembox__icon__pdf"></FaFilePdfO>;
+    if (application.search('powerpoint') !== -1) return <FaFilePowerpointO className="upb__itembox__icon upb__itembox__icon__powerpoint"></FaFilePowerpointO>;
+    if (application.search('msword') !== -1) return <FaFileWordO className="upb__itembox__icon upb__itembox__icon__word"></FaFileWordO>;
+    if (application.search('wordprocessingml') !== -1) return <FaFileWordO className="upb__itembox__icon upb__itembox__icon__word"></FaFileWordO>;
     return <FaFileO className="upb__itembox__icon"/>;
   }
   render(){
