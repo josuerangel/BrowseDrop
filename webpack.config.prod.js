@@ -10,7 +10,7 @@ module.exports = {
     components: [__dirname + '/src/components/Component.js'],
     uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js'],
     uploadBoxStandAlone : ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/UploadBox/index.js'],
-    "browse-drop-wrapper-min": ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/wrapper3.js']
+    "browse-drop-standalone.min": ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/wrapper3.js']
   },
   output: {
     path: './bundles',

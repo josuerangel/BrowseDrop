@@ -15,11 +15,13 @@ class File extends React.Component {
       deleteFileTitle: "Delete file",
       deleteFileBody: "Are you sure you want to remove this file?",
       btnDeleteFileClose: "Close",
-      btnDeleteFileSave: "Delete"
+      btnDeleteFileSave: "Delete",
+      tooltipButtonDelete: 'Delete file',
+      tooltipButtonDownload: 'Download compress file'
     }
-    if (this.props.caption !== undefined) {
-      this.caption = deepmerge.all([{}, defaultCaption, this.props.caption]);
-    }
+    let userCaption = (this.props.caption !== undefined) ? this.props.caption : {};
+    this.caption = deepmerge.all([{}, defaultCaption, userCaption]);
+
     this.state = {
       isOver: false,
       showModal: false
@@ -28,8 +30,12 @@ class File extends React.Component {
   onClick(event){
     if (this.props.data.type === "directory")
       this.props.onClick(this.props.data);
-    else
-      window.open(this.props.data.url, "_new");
+    // else{
+    //   if (this.props.settings.openFileNewTab === true)
+    //     window.open(this.props.data.url, "_new");
+    //   else
+    //     window.open(this.props.data.url);
+    // }
   }
   setAnimation(){
     if(this.props.data.animationIn === undefined) return ""
@@ -41,17 +47,21 @@ class File extends React.Component {
   }
   handleMouseEnter(e){
     e.stopPropagation();
-    if (this.props.data.type !== "directory")
+    //if (this.props.data.type !== "directory")
       this.setState({ isOver: true})
   }
   handleMouseLeave(e){
     e.stopPropagation();
-    if (this.props.data.type !== "directory")
+    //if (this.props.data.type !== "directory")
       this.setState({ isOver: false})
   }
   handleClickTrash(e){
     e.preventDefault();
     this.setState({ showModal:true });
+  }
+  handleClickDownload(e){
+    e.preventDefault();
+    window.open(this.props.data.urlButtonDownload, '_blank');
   }
   closeModal(){
     this.setState({ showModal: false });
@@ -80,9 +90,15 @@ class File extends React.Component {
     }
     //console.log('buttonDelete: ', this.props.data.buttonDelete);
     const buttonTrash = (this.props.data.type !== "directory" && this.props.data.buttonDelete !== false) ?
-      (<div className={"upb__itembox__btnDelete__container " + this.setHiddenButtonDelete()}
+      (<div title={this.caption.tooltipButtonDelete} className={"upb__itembox__btnDelete__container " + this.setHiddenButtonDelete()}
         onClick={this.handleClickTrash.bind(this) }>
           <Glyphicon glyph="trash" className={"upb__itembox__btnDelete"} />
+      </div>) : null;
+
+    const buttonDownload = (this.props.data.type === "directory" && this.props.data.buttonDownload !== false) ?
+      (<div title={this.caption.tooltipButtonDownload} className={"upb__itembox__btnDelete__container " + this.setHiddenButtonDelete()}
+        onClick={this.handleClickDownload.bind(this) }>
+          <Glyphicon glyph="download-alt" className={"upb__itembox__btnDelete"} />
       </div>) : null;
 
     return <div className={"upb__itembox animated " + this.setAnimation()}
@@ -97,12 +113,14 @@ class File extends React.Component {
         {this.props.data.date}
       </div>
       {buttonTrash}
+      {buttonDownload}
       {modalInstance}
     </div>
   }
 };
 
 File.propTypes = {
+  caption: React.PropTypes.object,
   data: React.PropTypes.object,
   onClick: React.PropTypes.func
 };

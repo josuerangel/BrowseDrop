@@ -44,7 +44,7 @@ class Directory extends ZoneDrop {
                 onDragEnter={this.handleDragEnter.bind(this)}
                 onDragLeave={this.handleDragLeave.bind(this)}
                  onDragOver={this.handleDragOver.bind(this)}>
-            <File data={this.props.data} onClick={this.props.onClick} ></File>
+            <File data={this.props.data} onClick={this.props.onClick} caption={this.props.caption}></File>
             </FileDragAndDrop>
         </div>
     }

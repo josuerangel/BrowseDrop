@@ -100,6 +100,8 @@ options : {
       deleteFileBody: "¿Esta seguro de eliminar este archivo?",
       btnDeleteFileClose: "Cancelar",
       btnDeleteFileSave: "Eliminar",
+      tooltipButtonDelete: 'Delete file',
+      tooltipButtonDownload: 'Download compress file',
       errors: {
         maxSize: "file is too large! Please choose another file.",
         extensions: "invalid extension",
@@ -163,6 +165,9 @@ options : {
 
       // url for upload file
    		url: "../RelativeUrlForUpload",
+
+      // Show or hide button for download compress file
+      buttonDownload: true,      
 
       // url for delete file
    		urlDelete: "../RelativeUrlForDelete",

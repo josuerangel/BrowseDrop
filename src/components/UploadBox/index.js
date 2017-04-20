@@ -92,15 +92,15 @@ if (!Array.prototype.findIndex) {
 
 class UploadBox extends React.Component {
   arrDataOrinal : []
-  arrDirectorys : []
+  arrDirectories : []
   notificationCounter : null
   directoryHome : {}
   constructor(props) {
     super(props);
     this.arrDataOrinal = this.props.options.Data;
     this.notificationCounter = -1;
-    this.arrDirectorys = this.arrDataOrinal.filter((item) => (item.type === "directory"));
-    let directory = this.arrDirectorys.filter((item) => (item.id === 0))[0];
+    this.arrDirectories = this.arrDataOrinal.filter((item) => (item.type === "directory"));
+    let directory = this.arrDirectories.filter((item) => (item.id === 0))[0];
     this.directoryHome = directory;
     this.state = {
       directoryHover: null,
@@ -266,7 +266,7 @@ class UploadBox extends React.Component {
       <div className="upb_container">
         <input type="file" id="file" ref="fileUpload" onChange={this.handleSelectFile.bind(this)} style={{display:"none"}}></input>
         {alertDrop}
-        <Menu settings={this.props.options.config} directory={this.state.directory} directorys={this.arrDirectorys} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)} onClickUpload={this.handleClickUpload.bind(this)}></Menu>
+        <Menu settings={this.props.options.config} directory={this.state.directory} directories={this.arrDirectories} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)} onClickUpload={this.handleClickUpload.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} settings={this.props.options.config} caption={this.props.options.config.caption} directoryHome={this.directoryHome} onClickDirectory={this.handleClickDirectory.bind(this)} onDeleteFile={this.handleDeleteFile.bind(this)} onDrop={this.handleDrop.bind(this)} onDragEnter={this.handleDragEnter.bind(this)} onDragOver={this.handleHover.bind(this)} onDragLeave={this.handleDragLeave.bind(this)}></Box>
         <Notifications notifications={this.state.notifications} onDelete={this.deleteNotification.bind(this)}></Notifications>
       </div>

@@ -6,7 +6,9 @@ class Component extends React.Component {
     let options = {
       config: {
         caption: {
-          maxSize: "archivo grande"
+          maxSize: "archivo grande",
+          tooltipButtonDelete: 'Elimnar archivo',
+          tooltipButtonDownload: 'Descargar zip',
         },
         maxSize: 40,
         extensionsBlock: ["exe", "xml", "flv", "mp3", "mp4", "avi", "wma"],
@@ -22,7 +24,7 @@ class Component extends React.Component {
      {
        "id": 0,
        "name": "home",
-       "drag": true,
+       "drag": false,
        "type": "directory",
        "url": "../SvtFileUpload",
        "extraDataRequest": {
@@ -33,9 +35,11 @@ class Component extends React.Component {
         "id":1,
         "parentId":0,
         "name":"Directory",
-        "drag":true,
+        "drag":false,
         "type": "directory",
         "url": "urlToUpload",
+        "buttonDownload": true,
+        "urlButtonDownload" : "www.google.com",
         "extraDataRequest":{
            "param1":"ok"
         }

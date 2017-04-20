@@ -26,11 +26,12 @@ class BoxListFooter extends React.Component {
 
 class BoxList extends ZoneDrop {
   render() {
+    const boxFooter = (this.props.data.drag !== true) ? null : <BoxListFooter settings={this.props.settings}></BoxListFooter>;
     let directoryClass = classNames({'upb__BoxList': true, 'box__dragOver': this.state.isDragOver});
     return <div className={directoryClass}>
       <FileDragAndDrop onDrop={this.handleDrop.bind(this)} onDragEnter={this.handleDragEnter.bind(this)} onDragLeave={this.handleDragLeave.bind(this)} onDragOver={this.handleDragOver.bind(this)}>
         {this.props.items}
-        <BoxListFooter settings={this.props.settings}></BoxListFooter>
+        {boxFooter}
       </FileDragAndDrop>
     </div>
   }
@@ -48,7 +49,8 @@ class Box extends React.Component {
     return arrBox.map((item, index) => (item.type === "directory")
       ? <Directory key={index.toString()} data={item} onClick={this.props.onClickDirectory}
       onDrop={this.props.onDrop} onDragEnter={this.props.onDragEnter}
-      onDragOver={this.props.onDragOver} onDragLeave={this.props.onDragLeave} />
+      onDragOver={this.props.onDragOver} onDragLeave={this.props.onDragLeave}
+      caption={this.props.caption} />
     : <File key={index.toString()} data={item} caption={this.props.caption}
       directoryHome={this.props.directoryHome}
       settings={this.props.settings}
