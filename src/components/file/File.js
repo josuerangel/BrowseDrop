@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import './file.styl'
 import deepmerge from 'deepmerge'
 import Modal from 'react-bootstrap/lib/Modal'
@@ -28,14 +28,10 @@ class File extends React.Component {
     }
   }
   onClick(event){
-    if (this.props.data.type === "directory")
+    if (this.props.data.type === "directory") {
+      event.preventDefault();
       this.props.onClick(this.props.data);
-    // else{
-    //   if (this.props.settings.openFileNewTab === true)
-    //     window.open(this.props.data.url, "_new");
-    //   else
-    //     window.open(this.props.data.url);
-    // }
+    }
   }
   setAnimation(){
     if(this.props.data.animationIn === undefined) return ""
@@ -120,9 +116,9 @@ class File extends React.Component {
 };
 
 File.propTypes = {
-  caption: React.PropTypes.object,
-  data: React.PropTypes.object,
-  onClick: React.PropTypes.func
+  caption: PropTypes.object,
+  data: PropTypes.object,
+  onClick: PropTypes.func
 };
 
 module.exports = File

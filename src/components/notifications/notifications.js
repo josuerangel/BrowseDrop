@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import AnimateCSS from 'animate.css'
 import ListGroup from 'react-bootstrap/lib/ListGroup'
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
@@ -107,11 +108,11 @@ class NotificationItem extends React.Component {
 }
 
 NotificationItem.propTypes = {
-  onDelete: React.PropTypes.func,
-  type: React.PropTypes.string,
-  message: React.PropTypes.string,
-  dissmiss: React.PropTypes.number,
-  dataFile: React.PropTypes.object
+  onDelete: PropTypes.func,
+  type: PropTypes.string,
+  message: PropTypes.string,
+  dissmiss: PropTypes.number,
+  dataFile: PropTypes.object
 }
 
 NotificationItem.defaultProps = {
@@ -139,8 +140,8 @@ class Notifications extends React.Component {
 }
 
 Notifications.propTypes = {
-  notifications: React.PropTypes.array,
-  onDelete: React.PropTypes.func
+  notifications: PropTypes.array,
+  onDelete: PropTypes.func
 }
 Notifications.defaultProps = {
   notifications: []

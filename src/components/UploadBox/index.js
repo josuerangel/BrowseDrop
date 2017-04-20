@@ -1,5 +1,5 @@
 import React from 'react'
-//import {ReactDOM} from 'react-dom'
+import PropTypes from 'prop-types'
 import Menu from '../menu/menu'
 import Box from '../box/box'
 import './uploadbox.styl'
@@ -275,7 +275,7 @@ class UploadBox extends React.Component {
 }
 
 UploadBox.propTypes = {
-  options: React.PropTypes.object
+  options: PropTypes.object
 }
 UploadBox.defaultProps = {
   option: {}

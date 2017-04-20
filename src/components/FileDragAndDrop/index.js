@@ -1,54 +1,47 @@
-var React = require('react');
+import React from 'react'
+import PropTypes from 'prop-types'
 
 var style = {
   width: '100%',
   height: '100%'
 };
 
-var FileDragAndDrop = React.createClass({
-
-  propTypes: {
-    onDragStart: React.PropTypes.func,
-    onDrop: React.PropTypes.func.isRequired,
-    onDragEnter: React.PropTypes.func,
-    onDragLeave: React.PropTypes.func,
-    onDragOver: React.PropTypes.func,
-    onDragEnd: React.PropTypes.func,
-    dataDrop: React.PropTypes.string
-  },
-
-  handleDragStart: function (event) {
+class FileDragAndDrop extends React.Component {
+  constructor(props){
+    super(props);
+  };
+  handleDragStart(event) {
     if (typeof this.props.onDragStart === 'function') {
       this.props.onDragStart(event);
     }
-  },
+  };
 
-  handleDrag: function (event) {
+  handleDrag(event) {
     if (typeof this.props.onDrag === 'function') {
       this.props.onDrag(event);
     }
-  },
+  };
 
-  handleDragEnter: function (event) {
+  handleDragEnter(event) {
     if (typeof this.props.onDragEnter === 'function') {
       this.props.onDragEnter(event);
     }
-  },
+  };
 
-  handleDragLeave: function (event) {
+  handleDragLeave(event) {
     if (typeof this.props.onDragLeave === 'function') {
       this.props.onDragLeave(event);
     }
-  },
+  };
 
-  handleDragOver: function (event) {
+  handleDragOver(event) {
     event.preventDefault();
     if (typeof this.props.onDragOver === 'function') {
       this.props.onDragOver(event);
     }
-  },
+  };
 
-  handleDrop: function (event) {
+  handleDrop(event) {
     event.preventDefault();
     event.stopPropagation();
     if (event.dataTransfer.files.length > 0) {
@@ -56,15 +49,15 @@ var FileDragAndDrop = React.createClass({
         this.props.onDrop(event.dataTransfer, event, this.props.dataDrop);
       }
     }
-  },
+  };
 
-  handleDragEnd: function (event) {
+  handleDragEnd(event) {
     if (typeof this.props.onDragEnd === 'function') {
       this.props.onDragEnd(event);
     }
-  },
+  };
 
-  render: function () {
+  render() {
     return (
       <div
         onDragStart={this.handleDragStart}
@@ -79,6 +72,16 @@ var FileDragAndDrop = React.createClass({
       </div>
     );
   }
-});
+};
+
+FileDragAndDrop.propTypes = {
+  onDragStart: PropTypes.func,
+  onDrop: PropTypes.func.isRequired,
+  onDragEnter: PropTypes.func,
+  onDragLeave: PropTypes.func,
+  onDragOver: PropTypes.func,
+  onDragEnd: PropTypes.func,
+  dataDrop: PropTypes.string
+};
 
 module.exports = FileDragAndDrop;

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './icon-file.styl'
 import mime from 'mime-types'
 import mimedb from 'mime-db'
@@ -67,9 +68,9 @@ class IconFile extends React.Component{
 }
 
 IconFile.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string,
-  color: React.PropTypes.string
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  color: PropTypes.string
 };
 
 module.exports = IconFile;
