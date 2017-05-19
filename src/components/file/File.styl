@@ -63,14 +63,29 @@ color-box-shadow = rgba(0,0,0,0.05);
 .upb__itembox__btnDelete__container
   float: right
   vertical-align: middle
-  margin: -5.5px 16px 0px 0px
+  margin: 0px 16px 0px 0px
 
 .upb__itembox__btnDelete__container__hidden
   display: none;
 
 .upb__itembox__btnDelete
   font-size: 13px
-  padding: 9px 14px 9px 13px
+  padding: 8px 13px 8px 13px
+  margin: -2px 0 0 0
+  color: color-border-trash
+  border: 1px solid color-border-trash
+  border-radius: 3px
+  cursor: pointer
+  box-shadow: 0px 1px 5px color-box-shadow
+  transition: all 0.2s
+  &:hover
+    border-color: transparent
+    color: color-white
+    background-color: color-border-trash
+
+.upb__itembox__btnDownload
+  font-size: 18px
+  padding: 4px 10px 6px 10px
   color: color-border-trash
   border: 1px solid color-border-trash
   border-radius: 3px

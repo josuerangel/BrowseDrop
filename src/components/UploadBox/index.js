@@ -157,6 +157,7 @@ class UploadBox extends React.Component {
     this.setState({notifications: arrNotifications});
   }
   handleDrop(fileList, directory) {
+    console.log('handleDrop',this);
     if (directory.drag === false) return;
     console.log('handleDrop fileList: ', fileList);
     const self = this;
@@ -180,6 +181,8 @@ class UploadBox extends React.Component {
   }
   handleClickDirectory(directory) {
     this.setState({directory: directory});
+    // if (this.props.options.config.afterClickDirectory != undefined)
+    //   this.props.options.config.afterClickDirectory(directory);
   }
   handleClickMenu(directory) {
     this.setState({directory: directory})
@@ -278,7 +281,7 @@ UploadBox.propTypes = {
   options: PropTypes.object
 }
 UploadBox.defaultProps = {
-  option: {}
+  options: {}
 }
 
 module.exports = UploadBox;

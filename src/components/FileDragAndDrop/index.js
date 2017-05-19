@@ -23,6 +23,8 @@ class FileDragAndDrop extends React.Component {
   };
 
   handleDragEnter(event) {
+    console.log('filedragdrop handleDragEnter');
+    console.log(this);
     if (typeof this.props.onDragEnter === 'function') {
       this.props.onDragEnter(event);
     }
@@ -60,13 +62,13 @@ class FileDragAndDrop extends React.Component {
   render() {
     return (
       <div
-        onDragStart={this.handleDragStart}
-        onDrag={this.handleDrop}
-        onDragEnter={this.handleDragEnter}
-        onDragLeave={this.handleDragLeave}
-        onDragOver={this.handleDragOver}
-        onDrop={this.handleDrop}
-        onDragEnd={this.handleDragEnd}
+        onDragStart={this.handleDragStart.bind(this)}
+        onDrag={this.handleDrop.bind(this)}
+        onDragEnter={this.handleDragEnter.bind(this)}
+        onDragLeave={this.handleDragLeave.bind(this)}
+        onDragOver={this.handleDragOver.bind(this)}
+        onDrop={this.handleDrop.bind(this)}
+        onDragEnd={this.handleDragEnd.bind(this)}
         style={style}>
         {this.props.children}
       </div>

@@ -33,10 +33,10 @@ class IconFile extends React.Component{
         result = <FaFileImageO className="upb__itembox__icon"></FaFileImageO>;
         break;
       case 'audio':
-        result = <FaFileAudioO className="upb__itembox__icon"></FaFileAudioO>;
+        result = <FaFileAudioO className="upb__itembox__icon upb__itembox__icon__audio"></FaFileAudioO>;
         break;
       case 'video':
-        result = <FaFileMovieO className="upb__itembox__icon"></FaFileMovieO>;
+        result = <FaFileMovieO className="upb__itembox__icon upb__itembox__icon__video"></FaFileMovieO>;
         break;
       case 'text':
         result = <FaFileTextO className="upb__itembox__icon upb__itembox__icon__text"></FaFileTextO>
@@ -50,10 +50,10 @@ class IconFile extends React.Component{
     return result;
   }
   setIconFileApplication(application){
-    if (application.search('compress') !== -1) return <FaFileArchiveO className="upb__itembox__icon upb__itembox__icon__compress"></FaFileArchiveO>;
-    if (application.search('excel') !== -1) return <FaFileExcelO className="upb__itembox__icon upb__itembox__icon__excel"></FaFileExcelO>;
+    if (application.search('compress') !== -1 || application.search('zip') !== -1) return <FaFileArchiveO className="upb__itembox__icon upb__itembox__icon__compress"></FaFileArchiveO>;
+    if (application.search('excel') !== -1 || application.search('spreadsheet') !== -1) return <FaFileExcelO className="upb__itembox__icon upb__itembox__icon__excel"></FaFileExcelO>;
     if (application.search('pdf') !== -1) return <FaFilePdfO className="upb__itembox__icon upb__itembox__icon__pdf"></FaFilePdfO>;
-    if (application.search('powerpoint') !== -1) return <FaFilePowerpointO className="upb__itembox__icon upb__itembox__icon__powerpoint"></FaFilePowerpointO>;
+    if (application.search('powerpoint') !== -1 || application.search('presentation') !== -1) return <FaFilePowerpointO className="upb__itembox__icon upb__itembox__icon__powerpoint"></FaFilePowerpointO>;
     if (application.search('msword') !== -1) return <FaFileWordO className="upb__itembox__icon upb__itembox__icon__word"></FaFileWordO>;
     if (application.search('wordprocessingml') !== -1) return <FaFileWordO className="upb__itembox__icon upb__itembox__icon__word"></FaFileWordO>;
     return <FaFileO className="upb__itembox__icon"/>;

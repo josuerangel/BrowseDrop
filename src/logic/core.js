@@ -149,12 +149,23 @@ function sendFile(directory, settings, file, notificationId, callback) {
     callback(message);
   }).catch(function(error) {
     console.log('sendFile error: ', error);
-    const message = {
-      status: "danger",
-      message: error.response.status + " - " + error.message + ' -- ' + error.response.url,
-      idNotification: notificationId,
-      item: {}
-    };
+    let message = null;
+    if (error.response == undefined){
+      message = {
+        status: "danger",
+        message: "Error in file: " + error.fileName + ", lineNumber: " + error.lineNumber +  ", message: " + error.message,
+        idNotification: notificationId,
+        item: {}
+      };
+    }
+    else {
+      message = {
+        status: "danger",
+        message: error.response.status + " - " + error.message + ' -- ' + error.response.url,
+        idNotification: notificationId,
+        item: {}
+      };
+    }
     console.log('sendFile error message: ', message);
     callback(message);
   });

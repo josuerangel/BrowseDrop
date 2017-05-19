@@ -22,7 +22,7 @@ class Component extends React.Component {
 
         //Show or hide button for upload file
         //if null or undefined show button
-        buttonUpload: false,
+        buttonUpload: true,
 
         //Show or hide icon home
         //if null or undefined show name for the item with id 0 (if necessary item with id 0)
@@ -180,6 +180,38 @@ class Component extends React.Component {
           }
         },
 
+        // other directory
+        {
+          // id unique
+          id: 444,
+
+          // The id of the parent folder. Omitted for the root node.
+          parentId: 999,
+
+          // name for file or directory
+          name: "Directory 2",
+
+          // allow drag in this directory
+          drag: true,
+
+          // need specific type
+          type: "directory",
+
+          // url for upload file
+          url: "../RelativeUrlForUpload",
+
+          // Show or hide button for download compress file
+          buttonDownload: true,
+
+          // url for delete file
+          urlDelete: "../RelativeUrlForDelete",
+
+          // Extra data for send
+          extraDataRequest: {
+            "param3": "ok"
+          }
+        },
+
         // Detail for file
         {
           // id unique
@@ -220,14 +252,14 @@ class Component extends React.Component {
         {
            id: 2,
            parentId: 0,
-           name: 'spreadsheet.xls',
+           name: 'spreadsheet.xlsx',
            date: '2017-02-01 10:17:57.0',
            url: 'urlToDownload'
         },
         {
            id: 3,
            parentId: 0,
-           name: 'power point.ppt',
+           name: 'power point.pptx',
            date: '2017-02-01 10:17:57.0',
            url: 'urlToDownload'
         },
@@ -262,7 +294,7 @@ class Component extends React.Component {
         {
            id: 8,
            parentId: 0,
-           name: 'compress.rar',
+           name: 'compress.zip',
            date: '2017-02-01 10:17:57.0',
            url: 'urlToDownload'
         },

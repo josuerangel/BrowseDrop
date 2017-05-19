@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/lib/Modal'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import IconFile from '../icon-file/icon-file.js'
+import TiDownloadOutline from 'react-icons/lib/ti/download-outline'
 
 class File extends React.Component {
   caption : {}
@@ -31,6 +32,10 @@ class File extends React.Component {
     if (this.props.data.type === "directory") {
       event.preventDefault();
       this.props.onClick(this.props.data);
+    }
+    else {
+      event.preventDefault();
+      window.open(this.props.data.url, "_new");
     }
   }
   setAnimation(){
@@ -84,17 +89,19 @@ class File extends React.Component {
         </Modal>
     );
     }
-    //console.log('buttonDelete: ', this.props.data.buttonDelete);
+
     const buttonTrash = (this.props.data.type !== "directory" && this.props.data.buttonDelete !== false) ?
       (<div title={this.caption.tooltipButtonDelete} className={"upb__itembox__btnDelete__container " + this.setHiddenButtonDelete()}
         onClick={this.handleClickTrash.bind(this) }>
           <Glyphicon glyph="trash" className={"upb__itembox__btnDelete"} />
       </div>) : null;
 
-    const buttonDownload = (this.props.data.type === "directory" && this.props.data.buttonDownload !== false) ?
+    const buttonDownload = (this.props.data.type === "directory" && this.props.data.buttonDownload === true) ?
       (<div title={this.caption.tooltipButtonDownload} className={"upb__itembox__btnDelete__container " + this.setHiddenButtonDelete()}
         onClick={this.handleClickDownload.bind(this) }>
-          <Glyphicon glyph="download-alt" className={"upb__itembox__btnDelete"} />
+          <span className="upb__itembox__btnDownload">
+            <TiDownloadOutline></TiDownloadOutline>
+          </span>
       </div>) : null;
 
     return <div className={"upb__itembox animated " + this.setAnimation()}
