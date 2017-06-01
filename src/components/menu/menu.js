@@ -7,7 +7,6 @@ import TiUploadOutline from 'react-icons/lib/ti/upload-outline'
 import Button from 'react-bootstrap/lib/Button'
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import {CoreDownload} from '../../logic/download.js'
 
 class MenuItem extends React.Component {
   handleClick(event) {

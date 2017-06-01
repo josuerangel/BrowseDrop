@@ -26,8 +26,16 @@ class IconFile extends React.Component{
     : this.setIconFile(this.props.name);
   }
   setIconFile(name){
-    const arrType = mime.lookup(name).split("/");
+    console.log('setIconFile name:', name);
+    console.log('setIconFile mime', mime.lookup(name));
+    let arrType
+    if (mime.lookup(name))
+      arrType = mime.lookup(name).split("/");
+    else
+      arrType = ["noapplication"];
+
     let result = null;
+    console.log('setIconFile arrType: ', arrType);
     switch (arrType[0]) {
       case 'image':
         result = <FaFileImageO className="upb__itembox__icon"></FaFileImageO>;

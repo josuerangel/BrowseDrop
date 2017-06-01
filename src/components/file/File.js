@@ -43,6 +43,8 @@ class File extends React.Component {
     else return this.props.data.animationIn
   }
   setHiddenButtonDelete(){
+    if (this.props.data.buttonDownloadAutoHide === false) return "";
+
     if (this.state.isOver) return "";
     else return "upb__itembox__btnDelete__container__hidden";
   }
@@ -70,6 +72,10 @@ class File extends React.Component {
   sendDeleteFile(e){
     this.props.onDeleteFile(this.props.data);
     this.setState({ showModal: false });
+  }
+  setDisabled(){
+    if (this.props.data.noAction === true)
+      return "upb__itembox__disabled";
   }
   render () {
     let modalInstance = null;
@@ -104,7 +110,7 @@ class File extends React.Component {
           </span>
       </div>) : null;
 
-    return <div className={"upb__itembox animated " + this.setAnimation()}
+    return <div className={"upb__itembox animated " + this.setAnimation() + this.setDisabled()}
       onMouseEnter={this.handleMouseEnter.bind(this)}
       onMouseLeave={this.handleMouseLeave.bind(this)}>
       <div className="upb__itembox__iconName">

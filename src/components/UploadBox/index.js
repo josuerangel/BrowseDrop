@@ -141,9 +141,11 @@ class UploadBox extends React.Component {
   callbackCore(data) {
     let arrNotifications = this.state.notifications.map((notification) => {
       if (notification.id === data.idNotification || notification.id === data.notificationId) {
+        console.log('callbackCore modifing notification before: ', notification, data);
         notification.type = data.status;
         notification.message = data.message;
-        notification.dissmiss = 10;
+        notification.dissmiss = (data.status != "info") ? 10 : 0;
+        console.log('callbackCore modifing notification after: ', notification);
       }
       return notification;
     });

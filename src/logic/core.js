@@ -176,7 +176,7 @@ function sendFile(directory, settings, file, notificationId, callback) {
  */
 function applyValidation(file, settings, itemsBox) {
   if (!extensions(file, settings.extensions)) return settings.caption.errors.extensions;
-  if (!maxSize(file, 40)) return settings.caption.errors.maxSize;
+  if (!maxSize(file, settings.maxSize)) return settings.caption.errors.maxSize;
   if (extensionsBlock(file, settings.extensionsBlock)) return settings.caption.errors.extensionsBlock;
   if (allowDuplicates(itemsBox, file, settings.allowDuplicates)) return settings.caption.errors.allowDuplicates;
   console.log('applyValidation finish');
