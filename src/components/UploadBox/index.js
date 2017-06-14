@@ -177,7 +177,7 @@ class UploadBox extends React.Component {
       settings.directoryHome = this.directoryHome;
       setTimeout(function() {
         console.log('before send CoreSingleFile notificationCounter: ', notificationId);
-        CoreSingleFile(directory, fileList[0], settings, self.state.items, notificationId, self.callbackCore.bind(self));
+        CoreSingleFile(directory, fileList[x], settings, self.state.items, notificationId, self.callbackCore.bind(self));
       }, 1000);
     }
   }

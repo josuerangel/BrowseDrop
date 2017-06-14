@@ -43,7 +43,8 @@ class File extends React.Component {
     else return this.props.data.animationIn
   }
   setHiddenButtonDelete(){
-    if (this.props.data.buttonDownloadAutoHide === false) return "";
+    if (this.props.data.buttonDownloadAutoHide === false
+      || this.props.data.buttonDeleteAutoHide === false) return "";
 
     if (this.state.isOver) return "";
     else return "upb__itembox__btnDelete__container__hidden";
