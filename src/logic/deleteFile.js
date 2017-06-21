@@ -17,9 +17,6 @@ function parseJSON(response) {
 function CoreDeleteFile(file, home, settings, notificationId, callback){
   console.log('CoreDeleteFile: ', file, home, settings, notificationId);
   let dataToSend = {};
-  // let formData = new FormData();
-  // for (let attr in this.props.data)
-  //   formData.append(attr, extraData[attr]);
 
   if(typeof settings.beforeSendDeleteFile === 'function'){
     dataToSend = settings.beforeSendDeleteFile(file);
@@ -27,7 +24,7 @@ function CoreDeleteFile(file, home, settings, notificationId, callback){
   }
   else dataToSend = file;
 
-  let urlToSend = home.urlDelete + '?vUPB=0.1.0';
+  let urlToSend = home.urlDelete + '?vBD=0.1.0';
 
   console.log('settings onlyBeforeSendDeletFile: ', settings.onlyDataBeforeSendDeleteFile);
   if (settings.onlyDataBeforeSendDeleteFile !== true)

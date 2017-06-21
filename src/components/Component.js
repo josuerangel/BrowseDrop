@@ -28,9 +28,18 @@ class Component extends React.Component {
         //if null or undefined show name for the item with id 0 (if necessary item with id 0)
         iconHome: true,
 
-        // Callback fired if the uploading succeeds
-        // if you need data transform, because react-browsedrop need follow struct:
+        // Callback fired when clicked menu item
+        // directory = Rendered directory
+        changeDirectory: function(directory){
+          // this example show or hide something when is home
+          // $ you need include jQuery in your site.
+    			//(directory.id == 0) ? $(".something").show() : $(".something").hide();
+    		},
+
+        // Callback fired if the uploading request succeeds
+        // if you need data transform
         onSuccess: function(data) {
+          // BrowseDrop need the follow structure for message response
           var ObjectSuccessForReactBrowseDrop = {
             status: 'success',
             message: 'message for show',
@@ -46,6 +55,13 @@ class Component extends React.Component {
           return ObjectSuccessForReactBrowseDrop;
         },
 
+        // Callback fired after when file is added
+        // itemAdded = item was removed
+        // Directory = Rendered directory
+        // BrowseDrop = instance from BrowseDrop, you can interact with the API
+        afterAddFile: function(itemAdded, Directory, BrowseDrop){
+          console.log(itemAdded, Directory, BrowseDrop);
+        },
 
         // Flag for define which data send, when is true only send data returned in method beforeSendDeleteFile
         // Caution if true and beforeSendDeleteFile is undefined don't send params in the request
@@ -67,9 +83,8 @@ class Component extends React.Component {
         // Callback fired if the deleting succeeds
         // you need return an object valid check the structure
         // data = data from request
-        // itemForDelete = data for item file in react-browsedrop
+        // itemForDelete = data for item file in BrowseDrop
         onSuccessDeleteFile: function(data, itemForDelete){
-          var result = {}
           if (data.result === "OK"){
             return {
               status: 'success',
@@ -86,6 +101,13 @@ class Component extends React.Component {
           }
         },
 
+        // Callback fired after when file is removed
+        // itemDeleted = item was removed
+        // Directory = Rendered directory
+        // BrowseDrop = instance from BrowseDrop, you can interact with the API
+        afterDeleteFile: function(itemDeleted, Directory, BrowseDrop){
+          console.log(itemDeleted, Directory, BrowseDrop);
+        },
 
         // Captions
         // By default language is English, but you can personalize your messages
@@ -133,15 +155,15 @@ class Component extends React.Component {
           type: "directory",
 
           // url for upload file
-          // react-browsedrop use this url for all directories dosen't have url
+          // BrowseDrop use this url for all directories dosen't have url
           url: "../RelativeUrlForUpload",
 
           // url for delete file
-          // react-browsedrop use this url for all files dosen't have url
+          // BrowseDrop use this url for all files dosen't have url
           urlDelete: "../RelativeUrlForDelete",
 
           // Extra data for send
-          // react-browsedrop use this extra data for all directories and mixed with the specific directory
+          // BrowseDrop use this extra data for all directories and mixed with the specific directory
           extraDataRequest: {
             param1: "ok"
           }
@@ -165,6 +187,9 @@ class Component extends React.Component {
           // need specific type
           type: "directory",
 
+          // you can display a string in column Date
+          date: "-",
+
           // url for upload file
           url: "../RelativeUrlForUpload",
 
@@ -180,38 +205,6 @@ class Component extends React.Component {
           }
         },
 
-        // other directory
-        {
-          // id unique
-          id: 444,
-
-          // The id of the parent folder. Omitted for the root node.
-          parentId: 999,
-
-          // name for file or directory
-          name: "Directory 2",
-
-          // allow drag in this directory
-          drag: true,
-
-          // need specific type
-          type: "directory",
-
-          // url for upload file
-          url: "../RelativeUrlForUpload",
-
-          // Show or hide button for download compress file
-          buttonDownload: true,
-
-          // url for delete file
-          urlDelete: "../RelativeUrlForDelete",
-
-          // Extra data for send
-          extraDataRequest: {
-            "param3": "ok"
-          }
-        },
-
         // Detail for file
         {
           // id unique
@@ -224,7 +217,7 @@ class Component extends React.Component {
           name: "text.txt",
 
           // need specific type
-          // if null or undefined react-browsedrop take it like a file
+          // if null or undefined BrowseDrop take it like a file
           type: "file",
 
           // url for download or open file
@@ -242,6 +235,41 @@ class Component extends React.Component {
         },
 
         // this items is only for demo
+        // other directory
+        {
+          // id unique
+          id: 444,
+
+          // The id of the parent folder. Omitted for the root node.
+          parentId: 999,
+
+          // name for file or directory
+          name: "Directory 2",
+
+          // allow drag in this directory
+          drag: true,
+
+          // need specific type
+          type: "directory",
+
+          // you can display a string in column Date
+          date: "-",
+          
+          // url for upload file
+          url: "../RelativeUrlForUpload",
+
+          // Show or hide button for download compress file
+          buttonDownload: true,
+
+          // url for delete file
+          urlDelete: "../RelativeUrlForDelete",
+
+          // Extra data for send
+          extraDataRequest: {
+            "param3": "ok"
+          }
+        },
+
         {
            id: 1,
            parentId:0,

@@ -95,8 +95,16 @@ class UploadBox extends React.Component {
   arrDirectories : []
   notificationCounter : null
   directoryHome : {}
+  addFile
+  setItems: null
+  setDirectory: null
+  getItems: null
   constructor(props) {
     super(props);
+    this.addFile = this.handleAddFile;
+    this.setItems = this.handleSetItems;
+    this.setDirectory = this.handleSetDirectory;
+    this.getItems = this.handleGetItems;
     this.arrDataOrinal = this.props.options.Data;
     this.notificationCounter = -1;
     this.arrDirectories = this.arrDataOrinal.filter((item) => (item.type === "directory"));
@@ -110,6 +118,46 @@ class UploadBox extends React.Component {
       notifications: []
     };
   }
+
+  handleGetItems(){
+    return this.state.items;
+  }
+
+  handleSetDirectory(directory){
+    this.setState({ directory: directory });
+  }
+
+  handleSetItems(newItems) {
+    this.setState({items: newItems});
+    if (typeof this.props.options.changeFiles == 'function'){
+      const arrFile = this.state.items.filter((item) => (item.type !== "directory"));
+    }
+  }
+
+  handleAddFile(item){
+    let newItems = this.state.items;
+    newItems.push(item);
+    this.setItems(newItems);
+    if (typeof this.props.options.config.afterAddFile == 'function'){
+      this.props.options.config.afterAddFile(item, this.state.directory, this);
+    }
+  }
+
+  deleteFile(item){
+    let arrItems = this.state.items;
+    const indexElement = arrItems.findIndex(function(_item) {
+        return _item.id === item.id
+    });
+    let self = this;
+    console.log('UploadBox deleteFile before delete count: ', arrItems.length);
+    arrItems.splice(indexElement, 1);
+    console.log('UploadBox deleteFile after delete count: ', arrItems.length);
+    this.setItems(arrItems);
+    if (typeof this.props.options.config.afterDeleteFile == 'function'){
+      this.props.options.config.afterDeleteFile(item, this.state.directory, this);
+    }
+  }
+
   addNotification(options, file) {
     console.log('addNotification options: ', options);
     console.log('addNotification file: ', file);
@@ -150,10 +198,12 @@ class UploadBox extends React.Component {
       return notification;
     });
     if (data.item !== undefined) {
-      let newItems = this.state.items;
+      //let newItems = this.state.items;
       data.item.animationIn = "bounceIn";
-      newItems.push(data.item);
-      this.setState({items: newItems});
+      //newItems.push(data.item);
+      //this.setState({items: newItems});
+      //this.setItems(newItems);
+      this.addFile(data.item);
     }
     console.log('callbackCore notifications modified: ', arrNotifications);
     this.setState({notifications: arrNotifications});
@@ -233,13 +283,15 @@ class UploadBox extends React.Component {
       });
       console.log('UploadBox callbackDeleteFile indexElement: ', indexElement);
       arrItems[indexElement].animationIn = "bounceOut";
-      this.setState({items: arrItems});
+      //this.setState({items: arrItems});
+      this.setItems(arrItems);
       let self = this;
       setTimeout(function() {
-        console.log('UploadBox callbackDeleteFile before delete count: ', arrItems.length);
+        /*console.log('UploadBox callbackDeleteFile before delete count: ', arrItems.length);
         arrItems.splice(indexElement, 1);
         console.log('UploadBox callbackDeleteFile after delete count: ', arrItems.length);
-        self.setState({items: arrItems});
+        self.setState({items: arrItems});*/
+        self.deleteFile(arrItems[indexElement]);
       }, 1000);
     }
   }
