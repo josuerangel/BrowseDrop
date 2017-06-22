@@ -90,7 +90,7 @@ if (!Array.prototype.findIndex) {
   };
 }
 
-class UploadBox extends React.Component {
+class BrowseDrop extends React.Component {
   arrDataOrinal : []
   arrDirectories : []
   notificationCounter : null
@@ -331,11 +331,11 @@ class UploadBox extends React.Component {
   }
 }
 
-UploadBox.propTypes = {
+BrowseDrop.propTypes = {
   options: PropTypes.object
 }
-UploadBox.defaultProps = {
+BrowseDrop.defaultProps = {
   options: {}
 }
 
-module.exports = UploadBox;
+module.exports = BrowseDrop;

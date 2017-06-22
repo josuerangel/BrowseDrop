@@ -1,5 +1,5 @@
 import React from 'react'
-import UploadBox from './UploadBox'
+import UploadBox from './browsedrop'
 
 class Component extends React.Component {
   render () {
@@ -254,7 +254,7 @@ class Component extends React.Component {
 
           // you can display a string in column Date
           date: "-",
-          
+
           // url for upload file
           url: "../RelativeUrlForUpload",
 

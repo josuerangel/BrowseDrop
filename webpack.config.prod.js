@@ -5,12 +5,8 @@ var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: {
-    BrowseDrop : ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/UploadBox/index.js'],
-    app: [__dirname + '/src'],
-    components: [__dirname + '/src/components/Component.js'],
-    uploadBox: [__dirname + '/src/components/wrapper/wrapper2.js'],
-    uploadBoxStandAlone : ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/UploadBox/index.js'],
-    "browse-drop-standalone.min": ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/wrapper3.js']
+    "app.min": [__dirname + '/src'],
+    "browse-drop-standalone.min": ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/standalone.js'],
   },
   output: {
     path: './bundles',
