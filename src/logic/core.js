@@ -171,13 +171,46 @@ function sendFile(directory, settings, file, notificationId, callback) {
   });
 }
 
+function parseMessageValidation(text, opts, file) {
+  console.log('parseMessageValidation', text, opts, file);
+  const data = {
+    fileName : file.name,
+    extensionsBlock: opts.extensionsBlock,
+    maxSize: opts.maxSize
+  };
+
+  if (text.map != undefined){
+    return text.map((item, key) => {
+      return parseMessageValidationString(item, data);
+    })
+  }
+  else{
+    return parseMessageValidationString(text, data);
+  }
+}
+
+function parseMessageValidationString(text, data){
+  switch (typeof(text)) {
+      case "string":
+          return text.replace(/\{\{bd-(.*?)\}\}/g, function(i, match) {
+              return data[match];
+          });
+          break;
+      default:
+          return text;
+  }
+}
+
 /**
  * Apply validations, and return message
  */
 function applyValidation(file, settings, itemsBox) {
-  if (!extensions(file, settings.extensions)) return settings.caption.errors.extensions;
-  if (!maxSize(file, settings.maxSize)) return settings.caption.errors.maxSize;
-  if (extensionsBlock(file, settings.extensionsBlock)) return settings.caption.errors.extensionsBlock;
+  console.log('applyValidation settings: ', settings);
+  console.log('applyValidation settings: ', settings.caption.errors.extensions);
+
+  if (!extensions(file, settings.extensions)) return parseMessageValidation(settings.caption.errors.extensions, settings, file);
+  if (!maxSize(file, settings.maxSize)) return parseMessageValidation(settings.caption.errors.maxSize, settings, file);
+  if (extensionsBlock(file, settings.extensionsBlock)) return parseMessageValidation(settings.caption.errors.extensionsBlock, settings, file);
   if (allowDuplicates(itemsBox, file, settings.allowDuplicates)) return settings.caption.errors.allowDuplicates;
   console.log('applyValidation finish');
 }
@@ -196,7 +229,7 @@ function CoreSingleFile(directory, file, settings, itemsBox, notificationId, cal
   const settingsSingle = deepmerge.all([defaultSettings, settings]);
   console.log('CoreSingleFile deepmerge: ', settingsSingle);
   let message = applyValidation(file, settingsSingle, itemsBox);
-  console.log('CoreSingleFile applyValidation: ', message);
+  console.log('CoreSingleFile applyValidation message returned: ', message);
   if (message === undefined){
     const messageSend = (settings.caption.labelSend === undefined) ? 'Sending' : settings.caption.labelSend;
     const dataResponse = {

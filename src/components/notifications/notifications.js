@@ -13,7 +13,8 @@ class NotificationItem extends React.Component {
     this.timeout = null;
     this.state = {
       type: this.props.type,
-      animate: 'bounceIn'
+      animate: 'bounceIn',
+      show: true
     }
     this.handleDismiss = this.handleDismiss.bind(this);
     if (this.props.dissmiss !== 0) {
@@ -30,9 +31,11 @@ class NotificationItem extends React.Component {
       console.log('componentWillUpdate: ', nextProps, nextState);
     }
   componentDidUpdate(prevProps, prevState) {
-    if (process.env.NODE_ENV !== 'production')
+    if (process.env.NODE_ENV !== 'production'){
       console.log("componentDidUpdate: ", prevProps, prevState);
-    if (this.props.dissmiss !== 0)
+      console.log("componentDidUpdate: ", this.props);
+    }
+    if (this.props.dissmiss !== 0 && this.state.show != false)
       this.handleDismiss(this.props.onDelete);
     }
   handleDismiss(callback) {
@@ -50,7 +53,7 @@ class NotificationItem extends React.Component {
       if (process.env.NODE_ENV !== 'production')
         console.log('inside timer self,', self);
       if (self.refs.myNotification)
-        self.setState({animate: 'bounceOut'});
+        self.setState({animate: 'bounceOut', show: false});
       setTimeout(function() {
         if (process.env.NODE_ENV !== 'production')
           console.log('handleDismiss launch callback props: ', props);
@@ -72,11 +75,20 @@ class NotificationItem extends React.Component {
   }
   formatBytes(bytes,decimals) {
      if(bytes == 0) return '0 Bytes';
-     var k = 1000,
+     var k = 1024,
          dm = decimals + 1 || 3,
          sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
          i = Math.floor(Math.log(bytes) / Math.log(k));
-     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)).toFixed(2) + ' ' + sizes[i];
+  }
+  parseMessage(message){
+    console.log('parseMessage: ', message);
+    console.log('parseMessage typeof: ', typeof message);
+    if (message.map != undefined)
+      return message.map((item, key) => {
+        return <span className={"upb__notifications__multiline"} key={key}>{item}</span>
+      });
+    return message;
   }
   render() {
     const sizeFile = (this.props.dataFile.size === undefined)
@@ -98,7 +110,9 @@ class NotificationItem extends React.Component {
         </div>
       </div>
       <div className={"upb__notifications__action"}>
-        <div className={"upb__notifications__action__message"}>{this.props.message}</div>
+        <div className={"upb__notifications__action__message"}>
+          {this.parseMessage(this.props.message)}
+        </div>
         <div className={"upb__notifications__action__spinner"}>
           {this.setSpinner()}
         </div>
@@ -128,7 +142,7 @@ class Notifications extends React.Component {
   setNotifications() {
     if (this.props.notifications.length === 0)
       return [];
-    return this.props.notifications.map((notification, index) => <NotificationItem key={index.toString()} id={notification.id} type={notification.type} message={notification.message} dissmiss={notification.dissmiss} onDelete={this.props.onDelete} dataFile={notification.file}></NotificationItem>)
+    return this.props.notifications.map((notification, index) => <NotificationItem key={notification.id} id={notification.id} type={notification.type} message={notification.message} dissmiss={notification.dissmiss} onDelete={this.props.onDelete} dataFile={notification.file}></NotificationItem>)
   }
   render() {
     return <div className="upb__notifications__wrapper">

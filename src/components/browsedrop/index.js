@@ -23,7 +23,9 @@ if (!Array.prototype.filter) {
     }
 
     var res = [];
-    var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+    var thisArg = arguments.length >= 2
+      ? arguments[1]
+      : void 0;
     for (var i = 0; i < len; i++) {
       if (i in t) {
         var val = t[i];
@@ -96,9 +98,9 @@ class BrowseDrop extends React.Component {
   notificationCounter : null
   directoryHome : {}
   addFile
-  setItems: null
-  setDirectory: null
-  getItems: null
+  setItems : null
+  setDirectory : null
+  getItems : null
   constructor(props) {
     super(props);
     this.addFile = this.handleAddFile;
@@ -119,41 +121,41 @@ class BrowseDrop extends React.Component {
     };
   }
 
-  handleGetItems(){
+  handleGetItems() {
     return this.state.items;
   }
 
-  handleSetDirectory(directory){
-    this.setState({ directory: directory });
+  handleSetDirectory(directory) {
+    this.setState({directory: directory});
   }
 
   handleSetItems(newItems) {
     this.setState({items: newItems});
-    if (typeof this.props.options.changeFiles == 'function'){
+    if (typeof this.props.options.changeFiles == 'function') {
       const arrFile = this.state.items.filter((item) => (item.type !== "directory"));
     }
   }
 
-  handleAddFile(item){
+  handleAddFile(item) {
     let newItems = this.state.items;
     newItems.push(item);
     this.setItems(newItems);
-    if (typeof this.props.options.config.afterAddFile == 'function'){
+    if (typeof this.props.options.config.afterAddFile == 'function') {
       this.props.options.config.afterAddFile(item, this.state.directory, this);
     }
   }
 
-  deleteFile(item){
+  deleteFile(item) {
     let arrItems = this.state.items;
     const indexElement = arrItems.findIndex(function(_item) {
-        return _item.id === item.id
+      return _item.id === item.id
     });
     let self = this;
     console.log('UploadBox deleteFile before delete count: ', arrItems.length);
     arrItems.splice(indexElement, 1);
     console.log('UploadBox deleteFile after delete count: ', arrItems.length);
     this.setItems(arrItems);
-    if (typeof this.props.options.config.afterDeleteFile == 'function'){
+    if (typeof this.props.options.config.afterDeleteFile == 'function') {
       this.props.options.config.afterDeleteFile(item, this.state.directory, this);
     }
   }
@@ -183,7 +185,10 @@ class BrowseDrop extends React.Component {
     return notificationId
   }
   deleteNotification(notification) {
-    let arrNotifications = this.state.notifications.filter((n) => (n.id !== notification.id));
+    let arrNotifications = this.state.notifications.filter((n) => {
+      return n.id !== notification.id
+    });
+    console.log('deleteNotification: ', this.state.notifications, arrNotifications);
     this.setState({notifications: arrNotifications});
   }
   callbackCore(data) {
@@ -192,7 +197,9 @@ class BrowseDrop extends React.Component {
         console.log('callbackCore modifing notification before: ', notification, data);
         notification.type = data.status;
         notification.message = data.message;
-        notification.dissmiss = (data.status != "info") ? 10 : 0;
+        notification.dissmiss = (data.status != "info")
+          ? 10
+          : 0;
         console.log('callbackCore modifing notification after: ', notification);
       }
       return notification;
@@ -209,8 +216,9 @@ class BrowseDrop extends React.Component {
     this.setState({notifications: arrNotifications});
   }
   handleDrop(fileList, directory) {
-    console.log('handleDrop',this);
-    if (directory.drag === false) return;
+    console.log('handleDrop', this);
+    if (directory.drag === false)
+      return;
     console.log('handleDrop fileList: ', fileList);
     const self = this;
     const messageValidate = (this.props.options.config.caption.labelValidate === undefined)
@@ -219,7 +227,7 @@ class BrowseDrop extends React.Component {
     let settings = this.props.options.config;
 
     this.setState({directoryHover: null});
-    for(let x = 0, len = fileList.length; x < len; x++){
+    for (let x = 0, len = fileList.length; x < len; x++) {
       const notificationId = this.addNotification({
         type: 'info',
         message: messageValidate
@@ -245,7 +253,7 @@ class BrowseDrop extends React.Component {
   handleHover(directory) {
     if (directory !== this.state.directoryHover && directory.drag === true)
       this.setState({directoryHover: directory});
-  }
+    }
   handleDragLeave(directory) {
     this.setState({directoryHover: null});
   }
@@ -295,10 +303,10 @@ class BrowseDrop extends React.Component {
       }, 1000);
     }
   }
-  handleClickUpload(){
+  handleClickUpload() {
     this.refs.fileUpload.click();
   }
-  handleSelectFile(e){
+  handleSelectFile(e) {
     const self = this;
     const messageValidate = (this.props.options.config.caption.labelValidate === undefined)
       ? 'Validating'
@@ -315,13 +323,16 @@ class BrowseDrop extends React.Component {
   }
   render() {
     const messageDrop = (this.props.options.config.caption.labelDropInTo === undefined)
-      ? "Drop into " : this.props.options.config.caption.labelDropInTo;
+      ? "Drop into "
+      : this.props.options.config.caption.labelDropInTo;
     const alertDrop = (this.state.directoryHover !== null)
       ? <Alert bsStyle="success" className={"upb__alert__drop"}>{messageDrop + this.state.directoryHover.name}</Alert>
       : null;
     return (
       <div className="upb_container">
-        <input type="file" id="file" ref="fileUpload" onChange={this.handleSelectFile.bind(this)} style={{display:"none"}}></input>
+        <input type="file" id="file" ref="fileUpload" onChange={this.handleSelectFile.bind(this)} style={{
+          display: "none"
+        }}></input>
         {alertDrop}
         <Menu settings={this.props.options.config} directory={this.state.directory} directories={this.arrDirectories} iconHome={this.props.options.config.iconHome} onClick={this.handleClickMenu.bind(this)} onClickUpload={this.handleClickUpload.bind(this)}></Menu>
         <Box directory={this.state.directory} data={this.state.items} settings={this.props.options.config} caption={this.props.options.config.caption} directoryHome={this.directoryHome} onClickDirectory={this.handleClickDirectory.bind(this)} onDeleteFile={this.handleDeleteFile.bind(this)} onDrop={this.handleDrop.bind(this)} onDragEnter={this.handleDragEnter.bind(this)} onDragOver={this.handleHover.bind(this)} onDragLeave={this.handleDragLeave.bind(this)}></Box>
