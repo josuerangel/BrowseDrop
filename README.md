@@ -1,6 +1,9 @@
-#Browse Drop
+# Browse Drop
 
 BrowseDrop is a uploading tool written in ReactJS with UI like DropBox, Drive, etc., support drag & drop and validations.
+
+![](https://github.com/josuerangel/BrowseDrop/blob/master/images/browsedrop.gif)
+
 
 ![browsedrop]()
 
