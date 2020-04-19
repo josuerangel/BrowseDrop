@@ -1,6 +1,6 @@
 {
   "name": "uploadbox",
-  "version": "1.0.0",
+  "version": "1.12.3",
   "description": "uploader like dropbox",
   "main": "./bundles/BrowseDrop.js",
   "author": "Marcos Josue Rangel Aguilar",
