@@ -1,5 +1,5 @@
 import React from 'react'
-import 'babel-polyfill';
+import "@babel/polyfill";
 import BrowseDrop from '../browsedrop'
 
 function renderBrowseDrop(options, container, callback){
