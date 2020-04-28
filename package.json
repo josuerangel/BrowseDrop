@@ -6,8 +6,10 @@
   "author": "Marcos Josue Rangel Aguilar",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --inline --port 3000 --mode development",
-    "build": "webpack --env=prod --progress --profile --colors --config=webpack.config.prod.js"
+    "startold": "webpack-dev-server --inline --port 3000 --mode development",
+    "buildold": "webpack --env=prod --progress --profile --colors --config=webpack.config.prod.js",
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
   },
   "peerDependencies": {
     "react": "^15.3.2",
@@ -15,7 +17,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
-    "animate.css": "^3.5.2",
+    "animate.css": "^3.7.2",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
@@ -25,9 +27,9 @@
     "json-loader": "^0.5.4",
     "mime-types": "^2.1.15",
     "prop-types": "^15.5.8",
-    "react": "^15.3.2",
+    "react": "^16.13.1",
     "react-bootstrap": "^0.30.8",
-    "react-dom": "^15.3.2",
+    "react-dom": "^16.13.1",
     "react-icons": "^2.2.3",
     "whatwg-fetch": "^2.0.3"
   },
@@ -41,10 +43,12 @@
     "babel-preset-react": "^6.16.0",
     "bootstrap": "^3.3.7",
     "compression-webpack-plugin": "^0.3.2",
-    "css-loader": "^0.26.2",
-    "style-loader": "^0.13.2",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^2.5.1",
+    "css-loader": "^3.5.3",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.2.0",
+    "style-loader": "^1.2.0",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"

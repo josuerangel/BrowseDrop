@@ -1,7 +1,7 @@
-import React from 'react'
-import UploadBox from './browsedrop'
+import React from 'react';
+import UploadBox from './browsedrop';
 
-class Component extends React.Component {
+class BrowseDrop extends React.Component {
   render () {
     const options = {
       config: {
@@ -350,4 +350,4 @@ class Component extends React.Component {
   }// end render()
 }
 
-module.exports = Component;
+export default BrowseDrop;

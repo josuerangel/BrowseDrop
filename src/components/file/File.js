@@ -9,9 +9,9 @@ import IconFile from '../icon-file/icon-file.js'
 import TiDownloadOutline from 'react-icons/lib/ti/download-outline'
 
 class File extends React.Component {
-  caption : {}
   constructor(props){
     super(props);
+    this.caption = {};
     let defaultCaption = {
       deleteFileTitle: "Delete file",
       deleteFileBody: "Are you sure you want to remove this file?",

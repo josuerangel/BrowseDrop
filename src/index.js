@@ -1,5 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Component from './components/Component'
+//import React from 'react'
+import ReactDOM from 'react-dom';
+import BrowseDrop from './components/Component';
 
-ReactDOM.render(<Component></Component>, document.getElementById('main'))
+const wrapper = document.getElementById("container");
+wrapper ? ReactDOM.render(<BrowseDrop />, wrapper) : false;
+
+//import Form from "./js/components/Form";
