@@ -1,36 +1,28 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './icon-file.styl'
-import mime from 'mime-types'
-import mimedb from 'mime-db'
-import { FaFileO, FaFolderOpen, FaTrashO, FaFileImageO, FaFileArchiveO
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import './icon-file.styl';
+import mime from 'mime-types';
+import mimedb from 'mime-db';
+import { FaFileO, FaFolderOpen, FaFileImageO, FaFileArchiveO
 , FaFileAudioO, FaFileTextO, FaFileMovieO, FaFileWordO, FaFileExcelO
-, FaFilePdfO, FaFilePowerpointO} from 'react-icons/fa'
-/*import FaFolderOpen from 'react-icons/lib/fa/folder-open'
-import FaTrashO from 'react-icons/lib/fa/trash-o'
-import FaFileImageO from 'react-icons/lib/fa/file-image-o'
-import FaFileArchiveO from 'react-icons/lib/fa/file-archive-o'
-import FaFileAudioO from 'react-icons/lib/fa/file-audio-o'
-import FaFileTextO from 'react-icons/lib/fa/file-text-o'
-import FaFileMovieO from 'react-icons/lib/fa/file-movie-o'
-import FaFileWordO from 'react-icons/lib/fa/file-word-o'
-import FaFileExcelO from 'react-icons/lib/fa/file-excel-o'
-import FaFilePdfO from 'react-icons/lib/fa/file-pdf-o'
-import FaFilePowerpointO from 'react-icons/lib/fa/file-powerpoint-o'*/
+, FaFilePdfO, FaFilePowerpointO} from 'react-icons/fa';
 
-class IconFile extends React.Component{
+class IconFile extends Component{
   constructor(props) {
     super(props);
-  }
+  };
   setIcon(){
-    return (this.props.type === "directory")
+    return 
+      function test(){
+        return (this.props.type === "directory")
       ? <FaFolderOpen className="upb__itembox__icon" />
-    : this.setIconFile(this.props.name);
-  }
+      : this.setIconFile(this.props.name);
+    }
+  };
   setIconFile(name){
     console.log('setIconFile name:', name);
     console.log('setIconFile mime', mime.lookup(name));
-    let arrType
+    let arrType;
     if (mime.lookup(name))
       arrType = mime.lookup(name).split("/");
     else
@@ -58,8 +50,9 @@ class IconFile extends React.Component{
         result = <FaFileO className="upb__itembox__icon"/>;
     }
     return result;
-  }
+  };
   setIconFileApplication(application){
+    console.log(application);
     if (application.search('compress') !== -1 || application.search('zip') !== -1) return <FaFileArchiveO className="upb__itembox__icon upb__itembox__icon__compress"></FaFileArchiveO>;
     if (application.search('excel') !== -1 || application.search('spreadsheet') !== -1) return <FaFileExcelO className="upb__itembox__icon upb__itembox__icon__excel"></FaFileExcelO>;
     if (application.search('pdf') !== -1) return <FaFilePdfO className="upb__itembox__icon upb__itembox__icon__pdf"></FaFilePdfO>;
