@@ -16,4 +16,4 @@ class BoxHeader extends React.Component {
   }
 }
 
-module.exports = BoxHeader;
+export default BoxHeader;

@@ -69,4 +69,5 @@ function CoreDeleteFile(file, home, settings, notificationId, callback){
   });
 }
 
-module.exports = { CoreDeleteFile: CoreDeleteFile };
+//module.exports = { CoreDeleteFile: CoreDeleteFile };
+export default CoreDeleteFile;

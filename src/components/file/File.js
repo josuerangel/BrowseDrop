@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './file.styl'
 import deepmerge from 'deepmerge'
@@ -8,7 +8,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import IconFile from '../icon-file/icon-file.js'
 import TiDownloadOutline from 'react-icons/lib/ti/download-outline'
 
-class File extends React.Component {
+class File extends Component {
   constructor(props){
     super(props);
     this.caption = {};
@@ -135,4 +135,4 @@ File.propTypes = {
   onClick: PropTypes.func
 };
 
-module.exports = File
+export default File

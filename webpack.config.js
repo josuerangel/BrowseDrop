@@ -1,6 +1,14 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const poststylus = require("poststylus");
+const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000
+  },
     module: {
       rules: [
         {
@@ -19,6 +27,10 @@ module.exports = {
           ]
         },
         {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
           test: /\.styl$/i,
           use: [
               'style-loader',
@@ -32,6 +44,13 @@ module.exports = {
       new HtmlWebPackPlugin({
         template: "./src/js/components/index.html",
         filename: "./index.html"
-      })
+      }),
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          stylus: {
+            use: [poststylus([ 'autoprefixer', 'rucksack-css' ])]
+          }
+        }
+      }),
     ]
   };
