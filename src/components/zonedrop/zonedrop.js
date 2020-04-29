@@ -35,4 +35,4 @@ class ZoneDrop extends React.Component {
     }
 }
 
-module.exports = ZoneDrop;
+export default ZoneDrop;

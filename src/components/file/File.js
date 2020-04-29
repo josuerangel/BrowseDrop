@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './file.styl'
 import deepmerge from 'deepmerge'
-import Modal from 'react-bootstrap/lib/Modal'
-import Button from 'react-bootstrap/lib/Button'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+//import Glyphicon from 'react-bootstrap/Glyphicon'
 import IconFile from '../icon-file/icon-file.js'
-import TiDownloadOutline from 'react-icons/lib/ti/download-outline'
+import {TiDownloadOutline, TiTrash} from 'react-icons/ti'
 
 class File extends Component {
   constructor(props){
@@ -100,7 +100,7 @@ class File extends Component {
     const buttonTrash = (this.props.data.type !== "directory" && this.props.data.buttonDelete !== false) ?
       (<div title={this.caption.tooltipButtonDelete} className={"upb__itembox__btnDelete__container " + this.setHiddenButtonDelete()}
         onClick={this.handleClickTrash.bind(this) }>
-          <Glyphicon glyph="trash" className={"upb__itembox__btnDelete"} />
+          <TiTrash></TiTrash>
       </div>) : null;
 
     const buttonDownload = (this.props.data.type === "directory" && this.props.data.buttonDownload === true) ?

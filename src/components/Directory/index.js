@@ -50,4 +50,4 @@ class Directory extends ZoneDrop {
     }
 };
 
-module.exports = Directory;
+export default Directory;

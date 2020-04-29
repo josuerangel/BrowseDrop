@@ -6,8 +6,8 @@ import FileDragAndDrop from '../FileDragAndDrop'
 import classNames from 'classnames'
 import './box.styl'
 import ZoneDrop from '../zonedrop/zonedrop.js'
-import Grid from 'react-bootstrap/lib/Grid'
-import GoCloudUpload from 'react-icons/lib/go/cloud-upload'
+//import Grid from 'react-bootstrap/Grid'
+import { GoCloudUpload } from "react-icons/go";
 
 class BoxListFooter extends React.Component {
   constructor() {
@@ -18,7 +18,7 @@ class BoxListFooter extends React.Component {
       ? "Drag and drop files here"
       : this.props.settings.caption.labelBoxFooter;
     return <div className={"upb__BoxList__Footer"}>
-      <GoCloudUpload className={"upb__BoxList__Footer__iconCloud"}></GoCloudUpload>
+      <GoCloudUpload ></GoCloudUpload>
       <div>{messageCloud}</div>
       </div>
   }
@@ -69,4 +69,4 @@ class Box extends React.Component {
   }
 };
 
-module.exports = Box;
+export default Box;

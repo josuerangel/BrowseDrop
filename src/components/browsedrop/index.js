@@ -6,7 +6,7 @@ import './uploadbox.styl';
 import {Core, CoreSingleFile} from '../../logic/core.js';
 import {CoreDeleteFile} from '../../logic/deleteFile.js';
 import Notifications from '../notifications/notifications.js';
-import Alert from 'react-bootstrap/lib/Alert';
+import Alert from 'react-bootstrap/Alert';
 
 if (!Array.prototype.filter) {
   Array.prototype.filter = function(fun/*, thisArg*/) {
@@ -349,4 +349,4 @@ BrowseDrop.defaultProps = {
   options: {}
 }
 
-module.exports = BrowseDrop;
+export default BrowseDrop;

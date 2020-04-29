@@ -86,4 +86,4 @@ FileDragAndDrop.propTypes = {
   dataDrop: PropTypes.string
 };
 
-module.exports = FileDragAndDrop;
+export default FileDragAndDrop;

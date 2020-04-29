@@ -1,12 +1,12 @@
 import React from 'react';
 import './menu.styl';
-import TiHomeOutline from 'react-icons/lib/ti/home-outline'
-import TiChevronRightOutline from 'react-icons/lib/ti/chevron-right-outline'
-import TiDownloadOutline from 'react-icons/lib/ti/download-outline'
-import TiUploadOutline from 'react-icons/lib/ti/upload-outline'
-import Button from 'react-bootstrap/lib/Button'
-import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import {TiHomeOutline, TiChevronRightOutline, TiDownloadOutline, TiUploadOutline} from 'react-icons/ti'
+//import TiChevronRightOutline from 'react-icons/lib/ti/chevron-right-outline'
+//import TiDownloadOutline from 'react-icons/lib/ti/download-outline'
+//import TiUploadOutline from 'react-icons/lib/ti/upload-outline'
+import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+//import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 
 class MenuItem extends React.Component {
   handleClick(event) {
