@@ -4,9 +4,19 @@ const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
+  entry: {
+    app: [__dirname + '/src'],
+    "browse-drop-standalone": [__dirname + '/src/components/wrapper/standalone.js']
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    publicPath: '/dist'
+  },
+  devtool: "source-map",
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    compress: true,
+    compress: false,
     port: 9000
   },
     module: {

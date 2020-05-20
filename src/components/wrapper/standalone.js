@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import "@babel/polyfill";
-import BrowseDrop from '../browsedrop'
+import BrowseDrop from '../browsedrop';
 
 function renderBrowseDrop(options, container, callback){
   let _BrowseDrop = null;

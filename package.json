@@ -8,7 +8,7 @@
   "scripts": {
     "startold": "webpack-dev-server --inline --port 3000 --mode development",
     "buildold": "webpack --env=prod --progress --profile --colors --config=webpack.config.prod.js",
-    "start": "webpack-dev-server --open --mode development",
+    "start": "webpack-dev-server --open --mode development --inline --progress",
     "build": "webpack --mode production --progress --profile --colors"
   },
   "peerDependencies": {
