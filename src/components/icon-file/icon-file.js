@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./icon-file.styl";
-import mime from "mime-types";
-import mimedb from "mime-db";
+import mime from "mime";
 import {
   FaFile as FaFileO,
   FaFolderOpen,
@@ -29,10 +28,11 @@ class IconFile extends Component {
     );
   }
   setIconFile(name) {
+    const nameTyped = mime.getType(name);
     console.log("setIconFile name:", name);
-    console.log("setIconFile mime", mime.lookup(name));
+    console.log("setIconFile mime", nameTyped);
     let arrType;
-    if (mime.lookup(name)) arrType = mime.lookup(name).split("/");
+    if (nameTyped) arrType = nameTyped.split("/");
     else arrType = ["noapplication"];
 
     let result = null;
