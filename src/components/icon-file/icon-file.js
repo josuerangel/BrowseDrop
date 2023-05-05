@@ -22,14 +22,11 @@ class IconFile extends Component {
     super(props);
   }
   setIcon() {
-    return;
-    function test() {
-      return this.props.type === "directory" ? (
-        <FaFolderOpen className="upb__itembox__icon" />
-      ) : (
-        this.setIconFile(this.props.name)
-      );
-    }
+    return this.props.type === "directory" ? (
+      <FaFolderOpen className="upb__itembox__icon" />
+    ) : (
+      this.setIconFile(this.props.name)
+    );
   }
   setIconFile(name) {
     console.log("setIconFile name:", name);
