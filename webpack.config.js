@@ -5,62 +5,66 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    app: [__dirname + '/src'],
-    "browse-drop-standalone": [__dirname + '/src/components/wrapper/standalone.js']
+    app: [__dirname + "/src"],
+    "browse-drop-standalone": [
+      __dirname + "/src/components/wrapper/standalone.js",
+    ],
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    publicPath: '/dist'
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].js",
+    publicPath: "/dist",
   },
   devtool: "source-map",
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, "dist"),
     compress: false,
-    port: 9000
+    port: 9000,
   },
-    module: {
-      rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: {
-            loader: "babel-loader"
-          }
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
         },
-        {
-          test: /\.html$/,
-          use: [
-            {
-              loader: "html-loader"
-            }
-          ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.styl$/,
+        use: ["style-loader", "css-loader", "stylus-loader"],
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./src/js/components/index.html",
+      filename: "./index.html",
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        stylus: {
+          use: [poststylus(["autoprefixer", "rucksack-css"])],
         },
-        {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
-        },
-        {
-          test: /\.styl$/i,
-          use: [
-              'style-loader',
-              'css-loader',
-              'stylus-loader'
-          ]
-        }
-      ]
+      },
+    }),
+  ],
+  resolve: {
+    alias: {
+      react: path.join(__dirname, "node_modules", "react"),
     },
-    plugins: [
-      new HtmlWebPackPlugin({
-        template: "./src/js/components/index.html",
-        filename: "./index.html"
-      }),
-      new webpack.LoaderOptionsPlugin({
-        options: {
-          stylus: {
-            use: [poststylus([ 'autoprefixer', 'rucksack-css' ])]
-          }
-        }
-      }),
-    ]
-  };
+    extensions: [".js", ".jsx", ".styl"],
+  },
+};
