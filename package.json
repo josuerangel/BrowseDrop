@@ -44,7 +44,7 @@
     "babel-preset-react": "^6.16.0",
     "bootstrap": "^3.3.7",
     "compression-webpack-plugin": "^0.3.2",
-    "css-loader": "^3.5.3",
+    "css-loader": "^6.7.3",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^5.5.1",
     "poststylus": "^1.0.0",
