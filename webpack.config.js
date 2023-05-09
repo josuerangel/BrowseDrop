@@ -50,7 +50,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/js/components/index.html",
+      template: "./index.html",
       filename: "./index.html",
     }),
     new webpack.LoaderOptionsPlugin({
