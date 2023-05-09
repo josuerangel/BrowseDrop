@@ -25,6 +25,8 @@ color-box-shadow = rgba(0,0,0,0.05);
 .upb__itembox
   font-family: sans-serif,"Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma
   font-size: 13px
+  display: flex
+  align-items: center
   padding: 10px 5px 5px 5px
   border-top: 1px solid white
   border-bottom: 1px solid #ebedef
@@ -34,7 +36,8 @@ color-box-shadow = rgba(0,0,0,0.05);
     border-bottom: 1px solid color-border
 
 .upb__itembox > *
-  display: inline-block
+  display: flex
+  align-items: center
 
 .upb__itembox__iconName
   width: 70%
@@ -60,10 +63,11 @@ color-box-shadow = rgba(0,0,0,0.05);
     text-decoration: underline
     cursor: pointer
 
+.upb__itembox__date
+  width: 20%
+
 .upb__itembox__btnDelete__container
-  float: right
-  vertical-align: middle
-  margin: 0px 16px 0px 0px
+  font-size:24px
 
 .upb__itembox__btnDelete__container__hidden
   display: none;

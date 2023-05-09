@@ -1,65 +1,70 @@
-const path = require('path');
-var webpack = require('webpack');
-var CompressionPlugin = require('compression-webpack-plugin');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const poststylus = require("poststylus");
+const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
   entry: {
-    app: [__dirname + '/src'],
-    "browse-drop-standalone": ['babel-polyfill', 'whatwg-fetch', __dirname + '/src/components/wrapper/standalone.js']
+    app: [__dirname + "/src"],
+    "browse-drop-standalone": [
+      __dirname + "/src/components/wrapper/standalone.js",
+    ],
   },
   output: {
-    path: './bundles',
-    filename: '[name].js',
-    publicPath: '/bundles/'
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].js",
+    publicPath: "/dist",
   },
-  //devtool: "cheap-module-source-map",
   devtool: "source-map",
-  //devtool: "cheap-module-eval-source-map",
+  devServer: {
+    static: path.join(__dirname, "dist"),
+    compress: false,
+    port: 9000,
+  },
   module: {
-    loaders: [
-      {
-        test: /.js/,
-        loader: 'babel',
-        include: __dirname + '/src',
-        exclude: '/node_modules/'
-      },
-      {
-        // whatwg-fetch use Promsie which IE11 doesn't support
-        test: /\.js$/,
-        include: [/whatwg-.*/],
-        loader: 'babel'
-      },
-      {
-        test: /\.css$/,
-        loader:'style!css!'
-      },
-       { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
-       {
-            loader: 'json-loader',
-            test: /\.json$/
-        }
-    ],
     rules: [
-        {
-          test: /\.css$/,
-          use: [ 'style-loader', 'css-loader' ]
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
         },
-        {
-          test: /\.styl$/,
-          use: ['style-loader', 'css-loader', 'stylus-loader'],
-        }
-      ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.styl$/,
+        use: ["style-loader", "css-loader", "stylus-loader"],
+      },
+    ],
   },
   plugins: [
+    new HtmlWebPackPlugin({
+      template: "./index.html",
+      filename: "./index.html",
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        stylus: {
+          use: [poststylus(["autoprefixer", "rucksack-css"])],
+        },
+      },
+    }),
   ],
   resolve: {
     alias: {
-      'react': path.join(__dirname, 'node_modules', 'react')
+      react: path.join(__dirname, "node_modules", "react"),
     },
-    extensions: ['', '.js', '.jsx', '.styl']
+    extensions: [".js", ".jsx", ".styl"],
   },
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM'
-  }
 };

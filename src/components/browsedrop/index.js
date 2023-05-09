@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Menu from '../menu/menu'
-import Box from '../box/box'
-import './uploadbox.styl'
-import {Core, CoreSingleFile} from '../../logic/core.js'
-import {CoreDeleteFile} from '../../logic/deleteFile.js'
-import Notifications from '../notifications/notifications.js'
-import Alert from 'react-bootstrap/lib/Alert'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Menu from '../menu/menu';
+import Box from '../box/box';
+import './uploadbox.styl';
+import {Core, CoreSingleFile} from '../../logic/core.js';
+import {CoreDeleteFile} from '../../logic/deleteFile.js';
+import Notifications from '../notifications/notifications.js';
+import Alert from 'react-bootstrap/Alert';
 
 if (!Array.prototype.filter) {
   Array.prototype.filter = function(fun/*, thisArg*/) {
@@ -93,14 +93,14 @@ if (!Array.prototype.findIndex) {
 }
 
 class BrowseDrop extends React.Component {
-  arrDataOrinal : []
+  /*arrDataOrinal : []
   arrDirectories : []
   notificationCounter : null
   directoryHome : {}
   addFile
   setItems : null
   setDirectory : null
-  getItems : null
+  getItems : null*/
   constructor(props) {
     super(props);
     this.addFile = this.handleAddFile;
@@ -182,11 +182,11 @@ class BrowseDrop extends React.Component {
     arrNotifications.push(_notification);
     this.setState({notifications: arrNotifications});
     console.log('addNotification end for file: ', file);
-    return notificationId
+    return notificationId;
   }
   deleteNotification(notification) {
     let arrNotifications = this.state.notifications.filter((n) => {
-      return n.id !== notification.id
+      return n.id !== notification.id;
     });
     console.log('deleteNotification: ', this.state.notifications, arrNotifications);
     this.setState({notifications: arrNotifications});
@@ -349,4 +349,4 @@ BrowseDrop.defaultProps = {
   options: {}
 }
 
-module.exports = BrowseDrop;
+export default BrowseDrop;

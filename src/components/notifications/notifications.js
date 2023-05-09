@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import AnimateCSS from 'animate.css'
-import ListGroup from 'react-bootstrap/lib/ListGroup'
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem'
-import Alert from 'react-bootstrap/lib/Alert'
+import ListGroup from 'react-bootstrap/ListGroup'
+import ListGroupItem from 'react-bootstrap/ListGroupItem'
+import Alert from 'react-bootstrap/Alert'
 import './notifications.styl'
 import IconFile from '../icon-file/icon-file.js'
 
@@ -161,4 +161,4 @@ Notifications.defaultProps = {
   notifications: []
 }
 
-module.exports = Notifications;
+export default Notifications;

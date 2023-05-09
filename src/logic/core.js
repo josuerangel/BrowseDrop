@@ -268,7 +268,10 @@ function Core(fileList, options, itemsBox, callback) {
   }
 }
 
+/*
 module.exports = {
   Core: Core,
   CoreSingleFile: CoreSingleFile
-};
+};*/
+
+export { Core, CoreSingleFile }
